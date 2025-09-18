@@ -26,6 +26,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -102,6 +103,7 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
     }
 
     @Override
@@ -110,7 +112,7 @@ public class EditCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
+// instanceof handles nulls
         if (!(other instanceof EditCommand)) {
             return false;
         }
@@ -215,7 +217,7 @@ public class EditCommand extends Command {
                 return true;
             }
 
-            // instanceof handles nulls
+// instanceof handles nulls
             if (!(other instanceof EditPersonDescriptor)) {
                 return false;
             }
