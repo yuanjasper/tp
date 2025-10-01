@@ -25,3 +25,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Documentation, Code quality
+
+### Adon Yap
+
+<img src="images/udonzzz.png" width="200px">
+
+[[github](https://github.com/udonzzz)]
+
+* Role: Developer
+* Responsibilities: In charge of Schedule Component
