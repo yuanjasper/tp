@@ -288,16 +288,47 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `TuitionSync` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Add a tutee**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User enters details for the new tutee.
+2. TuitionSync adds the tutee.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User does not enter all compulsory details.
+  * 1a1. TuitionSync shows an error message.
+  
+    Use case resumes at step 1.
+
+* 1b. User enters details with incorrect format.
+  * 1b1. TuitionSync shows an error message.
+
+    Use case resumes at step 1.
+
+* 1c. User enters a name that already exists.
+  * 1c1. TuitionSync shows an error message.
+
+    Use case resumes at step 1.
+
+* 1d. User enters a timeslot that is already occupied.
+  * 1d1. TuitionSync shows an error message.
+
+    Use case resumes at step 1.
+
+**Use case: Delete a tutee**
+
+**MSS**
+
+1.  User requests to list tutees.
+2.  TuitionSync shows a list of tutees.
+3.  User requests to delete a specific tutee in the list.
+4.  TuitionSync deletes the tutee.
 
     Use case ends.
 
@@ -309,11 +340,45 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. TuitionSync shows an error message.
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: Add own schedule**
+
+**MSS**
+
+1. User enters details for the activity.
+2. TuitionSync adds the activity to schedule.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. User enters details with incorrect format.
+  * 1a1. TuitionSync shows an error message.
+
+    Use case resumes at step 1.
+
+* 1b. User enters a timeslot that is already occupied.
+  * 1b1. TuitionSync shows an error message.
+
+    Use case resumes at step 1.
+
+**Use case: Sort list of tutees by date**
+
+**MSS**
+
+1. User requests to list tutees by date.
+2. TuitionSync shows a list of tutees sorted by date of tuition.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
 
 ### Non-Functional Requirements
 
