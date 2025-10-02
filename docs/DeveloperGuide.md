@@ -9,7 +9,7 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -262,29 +262,40 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* Private tuition teacher who does one-on-one physical classes in Singapore, aged 21 years old, doing part-time studies
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+* Managing different clients: Tutee/Tutee’s Parents
+* Managing timing conflicts: Tuition classes / Study schedule
+* Managing location conflicts
+* Tracking of Tutee’s learning topic status
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                               | I want to …​                                        | So that I can…​                                              |
+|-----|---------------------------------------|-----------------------------------------------------|--------------------------------------------------------------|
+| `* * *` | new user                              | see information page                                | refer to instructions when I forget how to use the App       |
+| `* * *` | student                               | add my own schedule                                 | I can account for potential timetable conflicts with my own schedule|
+| `* * *` | student                               | delete my schedule                                  | I can free up the timeslot                           |
+| `* * *` | tuition teacher                       | add a tutee’s data                                  |  |
+| `* * *` | tuition teacher                       | delete a tutee's data                               |             |
+| `* * *` | tuition teacher                       | get the emails of all my current tutees             | I can email them their homework for the week        |
+| `* * *` | tuition teacher                       | get the billing contact of all my current tutees    | I can contact them about payment        |
+| `* * *` | tuition teacher                       | get the address of my tutee                         | I can proceed to the location for the lesson        |
+| `* * *` | tuition teacher                       | sort the list of tutees according to date of lesson | I can see more easily who I am teaching next        |
+| `* *` | tuition teacher                       | get the upcoming topic to be taught for my tutee    | I can prepare the materials necessary for the lesson        |
+| `* *` | tuition teacher                       | leave notes on what my tutee is weak in             | I know how to help them more        |
+| `* *` | tuition teacher and part-time student | have a daily overview of my activities for the day  | I know and can prepare for my day efficiently        |
+| `*` | tuition teacher | I can get suggested time slots for new tutees based on lesson date and duration  | I can slot in new tutees more easily        |
+| `*` | expert user                           | I can create shortcuts for tasks  | I can save time on frequently performed tasks        |
 
-*{More to be added}*
 
 ### Use cases
 
@@ -381,17 +392,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 ### Non-Functional Requirements
+**Performance**
+1. The system should  be able to load all contacts upon opening of the app within 2 seconds.
+2. All function calls should take no more than 1 second to complete.
+3. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 
+**Reliability**
+1. The system should be able to handle a certain number of data and requests without slowing down.
+2. The system should consistently perform its functions without critical failures, and it should be able to recover quickly from interruptions.
+
+**Usability**
+1. Users should be able to input data easily and intuitively and understand the system output easily.
+2. The system should offer a specific error message if user input is wrong.
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+**Compatibility**
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-*{More to be added}*
 
 ### Glossary
 
+* **TutionSync**: An address book that caters towards private tution teachers who studies part-time, and helps them keep track of their contacts, schedule, and activity locations.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
