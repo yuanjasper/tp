@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -30,6 +31,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -49,7 +51,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_SLOT + "SLOT] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_CONTACT + "BILLING CONTACT]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -108,8 +111,9 @@ public class EditCommand extends Command {
         TuitionDate updatedDate = editPersonDescriptor.getDate().orElse(personToEdit.getDate());
         TuitionSlot updatedSlot = editPersonDescriptor.getSlot().orElse(personToEdit.getSlot());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<BillingContact> updatedContacts = editPersonDescriptor.getContacts().orElse(personToEdit.getContacts());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDate, updatedSlot, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDate, updatedSlot, updatedTags, updatedContacts);
     }
 
     @Override
@@ -148,6 +152,7 @@ public class EditCommand extends Command {
         private TuitionDate date;
         private TuitionSlot slot;
         private Set<Tag> tags;
+        private Set<BillingContact> contacts;
 
         public EditPersonDescriptor() {}
 
@@ -163,13 +168,14 @@ public class EditCommand extends Command {
             setDate(toCopy.date);
             setSlot(toCopy.slot);
             setTags(toCopy.tags);
+            setContacts(toCopy.contacts);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, date, slot, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, date, slot, tags, contacts);
         }
 
         public void setName(Name name) {
@@ -237,6 +243,23 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        /**
+         * Sets {@code contacts} to this object's {@code contacts}.
+         * A defensive copy of {@code contacts} is used internally.
+         */
+        public void setContacts(Set<BillingContact> contacts) {
+            this.contacts = (contacts != null) ? new HashSet<>(contacts) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         */
+        public Optional<Set<BillingContact>> getContacts() {
+            return (contacts != null) ? Optional.of(Collections.unmodifiableSet(contacts)) : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -255,7 +278,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(date, otherEditPersonDescriptor.date)
                     && Objects.equals(slot, otherEditPersonDescriptor.slot)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(contacts, otherEditPersonDescriptor.contacts);
         }
 
         @Override
@@ -268,6 +292,7 @@ public class EditCommand extends Command {
                     .add("date", date)
                     .add("slot", slot)
                     .add("tags", tags)
+                    .add("contacts", contacts)
                     .toString();
         }
     }

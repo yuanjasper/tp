@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -21,6 +22,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,9 +37,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_TAG, PREFIX_CONTACT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_DATE, PREFIX_SLOT)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
+                PREFIX_EMAIL, PREFIX_DATE, PREFIX_SLOT)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -50,8 +54,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         TuitionDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         TuitionSlot slot = ParserUtil.parseSlot(argMultimap.getValue(PREFIX_SLOT).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<BillingContact> contactList = ParserUtil.parseContacts(argMultimap.getAllValues(PREFIX_CONTACT));
 
-        Person person = new Person(name, phone, email, address, date, slot, tagList);
+        Person person = new Person(name, phone, email, address, date, slot, tagList, contactList);
 
         return new AddCommand(person);
     }

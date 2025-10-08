@@ -15,6 +15,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -152,5 +153,32 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String contact} into a {@code BillingContact}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code contact} is invalid.
+     */
+    public static BillingContact parseContact(String contact) throws ParseException {
+        requireNonNull(contact);
+        String trimmedContact = contact.trim();
+        if (!BillingContact.isValidContact(trimmedContact)) {
+            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+        }
+        return new BillingContact(trimmedContact);
+    }
+
+    /**
+     * Parses {@code Collection<String> contact} into a {@code Set<BillingContacts>}.
+     */
+    public static Set<BillingContact> parseContacts(Collection<String> contacts) throws ParseException {
+        requireNonNull(contacts);
+        final Set<BillingContact> contactSet = new HashSet<>();
+        for (String contactNumber : contacts) {
+            contactSet.add(parseContact(contactNumber));
+        }
+        return contactSet;
     }
 }

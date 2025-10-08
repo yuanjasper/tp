@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,12 +27,13 @@ public class Person {
     private final TuitionDate date;
     private final TuitionSlot slot;
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<BillingContact> contacts = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, TuitionDate date, TuitionSlot slot, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, date, tags);
+    public Person(Name name, Phone phone, Email email, Address address, TuitionDate date, TuitionSlot slot, Set<Tag> tags, Set<BillingContact> contacts) {
+        requireAllNonNull(name, phone, email, address, date, tags, contacts);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -39,6 +41,7 @@ public class Person {
         this.date = date;
         this.slot = slot;
         this.tags.addAll(tags);
+        this.contacts.addAll(contacts);
     }
 
     public Name getName() {
@@ -74,7 +77,15 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns an immutable contact set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<BillingContact> getContacts() {
+        return Collections.unmodifiableSet(contacts);
+    }
+
+    /**
+     * Returns true if both persons have the everything except tags.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -113,13 +124,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && date.equals(otherPerson.date)
                 && slot.equals(otherPerson.slot)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && contacts.equals(otherPerson.contacts);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, date, slot, tags);
+        return Objects.hash(name, phone, email, address, date, slot, tags, contacts);
     }
 
     @Override
@@ -132,6 +144,7 @@ public class Person {
                 .add("date", date)
                 .add("slot", slot)
                 .add("tags", tags)
+                .add("contacts", contacts)
                 .toString();
     }
 

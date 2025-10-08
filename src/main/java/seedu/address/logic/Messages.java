@@ -49,6 +49,8 @@ public class Messages {
                 .append(person.getSlot())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
+        builder.append("; Billing Contacts: ");
+        person.getContacts().forEach(builder::append);
         return builder.toString();
     }
 
