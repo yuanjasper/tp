@@ -12,8 +12,8 @@ public class TuitionDate {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Date is the full name of the date of tuition being held, example: monday";
-    public static final List<String> VALIDATION_REGEX = List.of("monday", "tuesday"
-            , "wednesday", "thursday", "friday", "saturday", "sunday");
+    public static final List<String> VALIDATION_REGEX = List.of("monday", "tuesday",
+            "wednesday", "thursday", "friday", "saturday", "sunday");
     public final String date;
 
     /**
@@ -24,7 +24,7 @@ public class TuitionDate {
     public TuitionDate(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS);
-        String capital = date.substring(0,1).toUpperCase();
+        String capital = date.substring(0, 1).toUpperCase();
         String capitalisedDate = capital + date.substring(1);
         this.date = capitalisedDate;
     }
