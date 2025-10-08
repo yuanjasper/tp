@@ -12,8 +12,8 @@ public class TuitionDate {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Date is the full name of the date of tuition being held, example: monday";
-    public static final List<String> VALIDATION_REGEX = List.of("monday","tuesday"
-            ,"wednesday","thursday","friday","saturday","sunday");
+    public static final List<String> VALIDATION_REGEX = List.of("monday", "tuesday"
+            , "wednesday", "thursday", "friday", "saturday", "sunday");
     public final String date;
 
     /**

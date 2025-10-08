@@ -106,7 +106,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (contacts.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> contactSet = contacts.size() == 1 && contacts.contains("") ? Collections.emptySet() : contacts;
+        Collection<String> contactSet =
+                contacts.size() == 1 && contacts.contains("") ? Collections.emptySet() : contacts;
         return Optional.of(ParserUtil.parseContacts(contactSet));
     }
 
