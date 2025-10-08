@@ -253,9 +253,9 @@ public class EditCommand extends Command {
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable contact set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Returns {@code Optional#empty()} if {@code contacts} is null.
          */
         public Optional<Set<BillingContact>> getContacts() {
             return (contacts != null) ? Optional.of(Collections.unmodifiableSet(contacts)) : Optional.empty();

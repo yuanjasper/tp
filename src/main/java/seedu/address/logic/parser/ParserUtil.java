@@ -165,7 +165,7 @@ public class ParserUtil {
         requireNonNull(contact);
         String trimmedContact = contact.trim();
         if (!BillingContact.isValidContact(trimmedContact)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+            throw new ParseException(BillingContact.MESSAGE_CONSTRAINTS);
         }
         return new BillingContact(trimmedContact);
     }
