@@ -14,6 +14,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
+import seedu.address.model.person.TuitionSlot;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -109,6 +110,21 @@ public class ParserUtil {
             throw new ParseException(TuitionDate.MESSAGE_CONSTRAINTS);
         }
         return new TuitionDate(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String slot} into an {@code TuitionSlot}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code slot} is invalid.
+     */
+    public static TuitionSlot parseSlot(String slot) throws ParseException {
+        requireNonNull(slot);
+        String trimmedSlot = slot.trim();
+        if (!TuitionSlot.isValidSlot(trimmedSlot)) {
+            throw new ParseException(TuitionSlot.MESSAGE_CONSTRAINTS);
+        }
+        return new TuitionSlot(trimmedSlot);
     }
 
     /**

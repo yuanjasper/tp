@@ -11,7 +11,7 @@ import java.util.List;
 public class TuitionDate {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Date is the full name of the date of tuition being held, example: Monday";
+            "Date is the full name of the date of tuition being held, example: monday";
     public static final List<String> VALIDATION_REGEX = List.of("monday","tuesday"
             ,"wednesday","thursday","friday","saturday","sunday");
     public final String date;
@@ -24,14 +24,16 @@ public class TuitionDate {
     public TuitionDate(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS);
-        this.date = date;
+        String capital = date.substring(0,1).toUpperCase();
+        String capitalisedDate = capital + date.substring(1);
+        this.date = capitalisedDate;
     }
 
     /**
      * Returns true if a given string is a valid phone number.
      */
     public static boolean isValidDate(String test) {
-        return VALIDATION_REGEX.contains(test);
+        return VALIDATION_REGEX.contains(test.toLowerCase());
     }
 
     @Override

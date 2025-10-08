@@ -16,6 +16,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
+import seedu.address.model.person.TuitionSlot;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,6 +31,7 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final String date;
+    private final String slot;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -38,13 +40,14 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("date") String date,
+                             @JsonProperty("date") String date, @JsonProperty("slot") String slot,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.date = date;
+        this.slot = slot;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -59,6 +62,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         date = source.getDate().date;
+        slot = source.getSlot().slot;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -115,8 +119,16 @@ class JsonAdaptedPerson {
         }
         final TuitionDate modelDate = new TuitionDate(date);
 
+        if (slot == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, TuitionSlot.class.getSimpleName()));
+        }
+        if (!TuitionSlot.isValidSlot(slot)) {
+            throw new IllegalValueException(TuitionSlot.MESSAGE_CONSTRAINTS);
+        }
+        final TuitionSlot modelSlot = new TuitionSlot(slot);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelDate, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelDate, modelSlot, modelTags);
     }
 
 }
