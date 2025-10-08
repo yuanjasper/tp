@@ -53,6 +53,10 @@ class JsonAdaptedPerson {
         this.slot = slot;
         if (tags != null) {
             this.tags.addAll(tags);
+
+        }
+        if (contacts != null) {
+            this.contacts.addAll(contacts);
         }
     }
 

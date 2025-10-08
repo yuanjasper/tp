@@ -41,7 +41,7 @@ class JsonAdaptedContact {
      */
     public BillingContact toModelType() throws IllegalValueException {
         if (!BillingContact.isValidContact(contact)) {
-            throw new IllegalValueException(Tag.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(BillingContact.MESSAGE_CONSTRAINTS);
         }
         return new BillingContact(contact);
     }

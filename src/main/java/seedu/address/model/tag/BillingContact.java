@@ -39,7 +39,7 @@ public class BillingContact {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Tag)) {
+        if (!(other instanceof BillingContact)) {
             return false;
         }
 
