@@ -10,6 +10,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.TuitionDate;
+import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,7 +38,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setDate(person.getDate());
         descriptor.setTags(person.getTags());
+        descriptor.setContacts(person.getContacts());
     }
 
     /**
@@ -72,12 +76,30 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code TuitionDate} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDate(String date) {
+        descriptor.setDate(new TuitionDate(date));
+        return this;
+    }
+
+    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code contacts} into a {@code Set<BillableContacts>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withContacts(String... contacts) {
+        Set<BillingContact> contactSet = Stream.of(contacts).map(BillingContact::new).collect(Collectors.toSet());
+        descriptor.setContacts(contactSet);
         return this;
     }
 

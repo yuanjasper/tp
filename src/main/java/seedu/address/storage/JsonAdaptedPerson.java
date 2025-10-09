@@ -15,6 +15,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.TuitionDate;
+import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,7 +31,10 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final String date;
+    private final String slot;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedContact> contacts = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,13 +42,21 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("date") String date, @JsonProperty("slot") String slot,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("contacts") List<JsonAdaptedContact> contacts) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.date = date;
+        this.slot = slot;
         if (tags != null) {
             this.tags.addAll(tags);
+
+        }
+        if (contacts != null) {
+            this.contacts.addAll(contacts);
         }
     }
 
@@ -54,8 +68,13 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        date = source.getDate().date;
+        slot = source.getSlot().slot;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
+        contacts.addAll(source.getContacts().stream()
+                .map(JsonAdaptedContact::new)
                 .collect(Collectors.toList()));
     }
 
@@ -66,12 +85,17 @@ class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        final List<BillingContact> personContacts = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
+        for (JsonAdaptedContact contact : contacts) {
+            personContacts.add(contact.toModelType());
+        }
 
         if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Name.class.getSimpleName()));
         }
         if (!Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
@@ -79,7 +103,8 @@ class JsonAdaptedPerson {
         final Name modelName = new Name(name);
 
         if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Phone.class.getSimpleName()));
         }
         if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
@@ -87,7 +112,8 @@ class JsonAdaptedPerson {
         final Phone modelPhone = new Phone(phone);
 
         if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Email.class.getSimpleName()));
         }
         if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
@@ -95,15 +121,36 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Address.class.getSimpleName()));
         }
         if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
 
+        if (date == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TuitionDate.class.getSimpleName()));
+        }
+        if (!TuitionDate.isValidDate(date)) {
+            throw new IllegalValueException(TuitionDate.MESSAGE_CONSTRAINTS);
+        }
+        final TuitionDate modelDate = new TuitionDate(date);
+
+        if (slot == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TuitionSlot.class.getSimpleName()));
+        }
+        if (!TuitionSlot.isValidSlot(slot)) {
+            throw new IllegalValueException(TuitionSlot.MESSAGE_CONSTRAINTS);
+        }
+        final TuitionSlot modelSlot = new TuitionSlot(slot);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        final Set<BillingContact> modelContacts = new HashSet<>(personContacts);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress,
+                modelDate, modelSlot, modelTags, modelContacts);
     }
 
 }
