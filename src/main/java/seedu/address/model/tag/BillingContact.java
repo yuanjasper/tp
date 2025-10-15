@@ -56,7 +56,7 @@ public class BillingContact {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + contact + ']';
+        return contact;
     }
 
 }
