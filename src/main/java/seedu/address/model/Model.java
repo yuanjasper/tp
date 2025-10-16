@@ -10,6 +10,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.activity.Activity;
 
 /**
  * The API of the Model component.
@@ -80,6 +82,17 @@ public interface Model {
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
+     * Returns the user prefs' schedule file path.
+     */
+    Path getScheduleFilePath();
+
+    /**
+     * Sets the user prefs' schedule file path.
+     *
+     */
+    void setScheduleFilePath(Path scheduleFilePath);
+
+    /**
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
@@ -110,6 +123,43 @@ public interface Model {
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
+
+    /**
+     * Replaces schedule data with the data in {@code schedule}.
+     */
+    void setSchedule(ReadOnlySchedule schedule);
+
+    /** Returns the Schedule */
+    ReadOnlySchedule getSchedule();
+
+    /**
+     * Returns true if an activity with the same information as {@code activity} exists in schedule.
+     */
+    boolean hasActivity(Activity activity);
+
+    /**
+     * Returns true if the {@code activity} has mismatched start and end time.
+     */
+    boolean hasMismatchedTime(Activity activity);
+
+    /**
+     * Returns true if the {@code activity} overlaps with those already in schedule.
+     */
+    boolean hasOverlap(Activity activity);
+
+    /**
+     * Adds an activity to the schedule.
+     * The activity must not already exist in the schedule.
+     * The start time of the activity must be before its end time.
+     * The activity must not overlap with existing activities.
+     */
+    void addActivity(Activity activity);
+
+    /**
+     * Deletes an activity from the schedule.
+     * The activity must exist in the schedule.
+     */
+    void deleteActivity(Activity activity);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
