@@ -26,18 +26,17 @@ public class GetAddressCommand extends Command {
         this.predicate = predicate;
     }
 
+    @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         if (model.getFilteredPersonList().size() == 0) {
             return new CommandResult(Messages.MESSAGE_NO_USER);
-        }
-        else if (model.getFilteredPersonList().size() == 1) {
+        } else if (model.getFilteredPersonList().size() == 1) {
             return new CommandResult(
                     String.format("Here is the address of %s: %s", model.getFilteredPersonList().get(0).getName(),
                             model.getFilteredPersonList().get(0).getAddress()));
-        }
-        else {
+        } else {
             return new CommandResult(Messages.MESSAGE_MULTIPLE_ENTRIES);
         }
     }

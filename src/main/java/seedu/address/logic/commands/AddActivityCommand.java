@@ -58,7 +58,7 @@ public class AddActivityCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        if  (other == this) {
+        if (other == this) {
             return true;
         }
         if (!(other instanceof AddActivityCommand)) {

@@ -20,6 +20,11 @@ public class Timeslot {
 
     public final String value;
 
+    /**
+     * Constructs an {@code Timeslot}.
+     *
+     * @param timeslot A valid timeslot.
+     */
     public Timeslot(String timeslot) {
         requireNonNull(timeslot);
         checkArgument(isValidTimeslot(timeslot), MESSAGE_CONSTRAINTS);

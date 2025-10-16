@@ -14,6 +14,9 @@ import seedu.address.model.schedule.activity.Day;
 import seedu.address.model.schedule.activity.Info;
 import seedu.address.model.schedule.activity.Timeslot;
 
+/**
+ * Parses input arguments and creates a new AddActivityCommand object
+ */
 public class AddActivityCommandParser implements Parser<AddActivityCommand> {
 
     /**

@@ -200,6 +200,12 @@ public class ParserUtil {
         return new Info(trimmedInfo);
     }
 
+    /**
+     * Parses a {@code String day} into an {@code Day}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code day} is invalid.
+     */
     public static Day parseDay(String day) throws ParseException {
         requireNonNull(day);
         String trimmedDay = day.trim();
@@ -209,6 +215,12 @@ public class ParserUtil {
         return new Day(trimmedDay);
     }
 
+    /**
+     * Parses a {@code String timeslot} into an {@code Timeslot}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code timeslot} is invalid.
+     */
     public static Timeslot parseTimeslot(String timeslot) throws ParseException {
         requireNonNull(timeslot);
         String trimmedTimeslot = timeslot.trim();

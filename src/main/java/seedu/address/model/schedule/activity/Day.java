@@ -19,6 +19,11 @@ public class Day {
 
     public final String value;
 
+    /**
+     * Constructs a {@code Day}.
+     *
+     * @param day A valid day.
+     */
     public Day(String day) {
         requireNonNull(day);
         checkArgument(isValidDay(day), MESSAGE_CONSTRAINTS);

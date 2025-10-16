@@ -19,10 +19,10 @@ import seedu.address.model.schedule.activity.Activity;
 @JsonRootName(value = "schedule")
 public class JsonSerializableSchedule {
 
-    public static String MESSAGE_DUPLICATE_ACTIVITY = "Schedule contains duplicate activities";
-    public static String MESSAGE_MISMATCHED_TIMING = "Schedule contains activities with "
+    public static final String MESSAGE_DUPLICATE_ACTIVITY = "Schedule contains duplicate activities";
+    public static final String MESSAGE_MISMATCHED_TIMING = "Schedule contains activities with "
             + "start time equal to or after end time";
-    public static String MESSAGE_OVERLAPPING_TIMING = "Schedule contains activities with overlapping timeslots";
+    public static final String MESSAGE_OVERLAPPING_TIMING = "Schedule contains activities with overlapping timeslots";
 
     private final List<JsonAdaptedActivity> activities = new ArrayList<>();
 

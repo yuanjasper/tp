@@ -19,6 +19,11 @@ public class Info {
 
     public final String value;
 
+    /**
+     * Constructs an {@code Info}.
+     *
+     * @param info A valid info.
+     */
     public Info(String info) {
         requireNonNull(info);
         checkArgument(isValidInfo(info), MESSAGE_CONSTRAINTS);
