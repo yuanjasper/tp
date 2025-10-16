@@ -3,7 +3,7 @@ package seedu.address.logic;
 import java.time.LocalTime;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.activity.Activity;
 
 /**
  * Checks that the day and time provided for an activity is valid
@@ -19,20 +19,26 @@ public class DayAndTimeChecker {
      * @param activities Existing list of activities.
      * @return true if there is no overlap, false otherwise.
      */
-    public static boolean hasNoOverlapWithOtherActivities(Activity activity, ObservableList<Activity> activities) {
+    public static boolean hasOverlapWithOtherActivities(Activity activity, ObservableList<Activity> activities) {
+        String[] activityTimings = activity.getTimeslot().value.split("-");
+        LocalTime startTime = LocalTime.parse(activityTimings[0]);
+        LocalTime endTime = LocalTime.parse(activityTimings[1]);
         for (Activity existingActivity : activities) {
+            String[] existingActivityTimings = existingActivity.getTimeslot().value.split("-");
+            LocalTime existingStartTime = LocalTime.parse(existingActivityTimings[0]);
+            LocalTime existingEndTime = LocalTime.parse(existingActivityTimings[1]);
             if (isNotSameDay(activity, existingActivity)) {
                 continue;
             }
-            if (isEqualOrAfter(activity.getStartTime(), existingActivity.getEndTime())) {
+            if (isEqualOrAfter(startTime, existingEndTime)) {
                 continue;
             }
-            if (isEqualOrAfter(existingActivity.getStartTime(), activity.getEndTime())) {
+            if (isEqualOrAfter(existingStartTime, endTime)) {
                 continue;
             }
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static boolean isNotSameDay(Activity activity, Activity existingActivity) {
@@ -40,7 +46,10 @@ public class DayAndTimeChecker {
     }
 
     public static boolean hasMismatchedStartAndEnd(Activity activity) {
-        return isEqualOrAfter(activity.getStartTime(), activity.getEndTime());
+        String[] activityTimings = activity.getTimeslot().value.split("-");
+        LocalTime startTime = LocalTime.parse(activityTimings[0]);
+        LocalTime endTime = LocalTime.parse(activityTimings[1]);
+        return isEqualOrAfter(startTime, endTime);
     }
 
     private static boolean isEqualOrAfter(LocalTime first, LocalTime second) {
