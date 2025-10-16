@@ -184,7 +184,7 @@ Examples:
 
 ### Sorting tutees by tuition date : `sortbydate`
 
-Returns a list of tutees sorted by tution date first, then time slot of tuition.
+Returns a list of tutees sorted by tuition date first, then time slot of tuition.
 
 Format: `sortbydate`
 
@@ -195,7 +195,7 @@ Adds an activity to your schedule.
 Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 
 Examples:
-* `addactivity lesson friday 09:00-10:00`
+* `addactivity i/lesson d/friday s/09:00-10:00`
 
 ### Clearing all entries : `clear`
 
