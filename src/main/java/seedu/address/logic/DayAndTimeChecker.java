@@ -45,6 +45,9 @@ public class DayAndTimeChecker {
         return !activity.getDay().equals(existingActivity.getDay());
     }
 
+    /**
+     * Returns true if the start and end time of the activity does not overlap.
+     */
     public static boolean hasMismatchedStartAndEnd(Activity activity) {
         String[] activityTimings = activity.getTimeslot().value.split("-");
         LocalTime startTime = LocalTime.parse(activityTimings[0]);

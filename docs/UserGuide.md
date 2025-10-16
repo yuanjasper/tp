@@ -192,10 +192,10 @@ Format: `sortbydate`
 
 Adds an activity to your schedule. 
 
-Format: `addactivity ACTIVITY_DESCRIPTION DAY TIME`
+Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 
 Examples:
-* `addactivity lesson friday 0900-1000`
+* `addactivity lesson friday 09:00-10:00`
 
 ### Clearing all entries : `clear`
 

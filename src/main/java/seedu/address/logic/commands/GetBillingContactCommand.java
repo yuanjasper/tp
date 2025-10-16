@@ -27,20 +27,20 @@ public class GetBillingContactCommand extends Command {
         this.predicate = predicate;
     }
 
+    @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         if (model.getFilteredPersonList().size() == 0) {
             return new CommandResult(Messages.MESSAGE_NO_USER);
-        }
-        else if (model.getFilteredPersonList().size() == 1) {
+        } else if (model.getFilteredPersonList().size() == 1) {
             return new CommandResult(
-                    String.format("Here is the billing contact of %s: %s", model.getFilteredPersonList().get(0).getName(),
+                    String.format("Here is the billing contact of %s: %s",
+                            model.getFilteredPersonList().get(0).getName(),
                             model.getFilteredPersonList().get(0).getContacts()
                                     .stream().map(BillingContact::toString)
-                                    .reduce("", (x,y) -> x + " " + y)));
-        }
-        else {
+                                    .reduce("", (x, y) -> x + " " + y)));
+        } else {
             return new CommandResult(Messages.MESSAGE_MULTIPLE_ENTRIES);
         }
     }

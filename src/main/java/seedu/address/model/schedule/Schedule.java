@@ -19,11 +19,15 @@ import seedu.address.model.schedule.exceptions.OverlappingActivityException;
  */
 public class Schedule implements ReadOnlySchedule {
     private final ObservableList<Activity> activities = FXCollections.observableArrayList();
-    private final ObservableList<Activity> unmodifiableActivities = FXCollections.unmodifiableObservableList(activities);
+    private final ObservableList<Activity> unmodifiableActivities =
+            FXCollections.unmodifiableObservableList(activities);
 
     public Schedule() {
     }
 
+    /**
+     * Creates a Schedule using the Activities in the {@code schedule}.
+     */
     public Schedule(ReadOnlySchedule schedule) {
         this();
         resetData(schedule);

@@ -19,10 +19,10 @@ import seedu.address.model.schedule.ReadOnlySchedule;
  */
 public class JsonScheduleStorage implements ScheduleStorage {
 
-    private static final Logger  logger = LogsCenter.getLogger(JsonScheduleStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonScheduleStorage.class);
     private Path filePath;
 
-    public  JsonScheduleStorage(Path filePath) {
+    public JsonScheduleStorage(Path filePath) {
         this.filePath = filePath;
     }
 
@@ -32,7 +32,7 @@ public class JsonScheduleStorage implements ScheduleStorage {
 
     @Override
     public Optional<ReadOnlySchedule> readSchedule() throws DataLoadingException {
-        return  readSchedule(filePath);
+        return readSchedule(filePath);
     }
 
     /**
@@ -52,7 +52,7 @@ public class JsonScheduleStorage implements ScheduleStorage {
 
         try {
             return Optional.of(jsonSchedule.get().toModelType());
-        } catch (IllegalValueException ive)  {
+        } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataLoadingException(ive);
         }

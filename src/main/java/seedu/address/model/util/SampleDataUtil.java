@@ -81,18 +81,18 @@ public class SampleDataUtil {
     }
 
     public static Activity[] getSampleActivities() {
-        return new  Activity[] {
-                new Activity(new Info("CS2103 Lecture"), new Day("friday"), new Timeslot("16:00-18:00")),
-                new Activity(new Info("CS2103 Tutorial"), new Day("friday"), new Timeslot("09:00-10:00")),
-                new Activity(new Info("CS2103 group meeting"), new Day("wednesday"), new Timeslot("17:00-18:00")),
-                new Activity(new Info("CCA"), new Day("thursday"), new Timeslot("18:00-20:00")),
-                new Activity(new Info("Extra lesson"), new Day("sunday"), new Timeslot("14:30-16:00")),
+        return new Activity[] {
+            new Activity(new Info("CS2103 Lecture"), new Day("friday"), new Timeslot("16:00-18:00")),
+            new Activity(new Info("CS2103 Tutorial"), new Day("friday"), new Timeslot("09:00-10:00")),
+            new Activity(new Info("CS2103 group meeting"), new Day("wednesday"), new Timeslot("17:00-18:00")),
+            new Activity(new Info("CCA"), new Day("thursday"), new Timeslot("18:00-20:00")),
+            new Activity(new Info("Extra lesson"), new Day("sunday"), new Timeslot("14:30-16:00"))
         };
     }
 
     public static ReadOnlySchedule getSampleSchedule() {
         Schedule sampleSchedule = new Schedule();
-        for (Activity  sampleActivity : getSampleActivities()) {
+        for (Activity sampleActivity : getSampleActivities()) {
             sampleSchedule.add(sampleActivity);
         }
         return sampleSchedule;
