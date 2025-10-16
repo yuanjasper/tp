@@ -1,39 +1,129 @@
 package seedu.address.model.schedule;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.DayAndTimeChecker;
+import seedu.address.model.schedule.activity.Activity;
+import seedu.address.model.schedule.exceptions.ActivityNotFoundException;
+import seedu.address.model.schedule.exceptions.DuplicateActivityException;
 import seedu.address.model.schedule.exceptions.MismatchedTimeException;
 import seedu.address.model.schedule.exceptions.OverlappingActivityException;
 
 /**
  * Represents the user's schedule with all their activities.
  */
-public class Schedule {
+public class Schedule implements ReadOnlySchedule {
     private final ObservableList<Activity> activities = FXCollections.observableArrayList();
+    private final ObservableList<Activity> unmodifiableActivities = FXCollections.unmodifiableObservableList(activities);
+
+    public Schedule() {
+    }
+
+    public Schedule(ReadOnlySchedule schedule) {
+        this();
+        resetData(schedule);
+    }
+
+    /**
+     * Replace the contents of the activities with {@code activities}.
+     * {@code activities} must not contain duplicate activities.
+     * The start time of the activities must be before its end time.
+     * The activities must not overlap.
+     */
+    public void setActivities(List<Activity> activities) {
+        requireAllNonNull(activities);
+        for (Activity activity : activities) {
+            add(activity);
+        }
+    }
+
+    /**
+     * Resets the existing data of this {@code Schedule} with {@code newSchedule}.
+     */
+    public void resetData(ReadOnlySchedule newSchedule) {
+        requireNonNull(newSchedule);
+        setActivities(newSchedule.getActivities());
+    }
+
+    /**
+     * Returns true if an activity with the same information as {@code activity} exists in schedule.
+     */
+    public boolean hasActivity(Activity toCheck) {
+        requireNonNull(toCheck);
+        return activities.contains(toCheck);
+    }
+
+    /**
+     * Returns true if the {@code activity} has mismatched start and end time.
+     */
+    public boolean hasMismatchedTime(Activity toCheck) {
+        requireNonNull(toCheck);
+        return DayAndTimeChecker.hasMismatchedStartAndEnd(toCheck);
+    }
+
+    /**
+     * Returns true if the {@code activity} overlaps with those already in schedule.
+     */
+    public boolean hasOverlap(Activity toCheck) {
+        requireNonNull(toCheck);
+        return DayAndTimeChecker.hasOverlapWithOtherActivities(toCheck, activities);
+    }
 
     /**
      * Adds an activity to schedule.
+     * The activity must not already exist in the schedule.
      * The start time of the activity must be before its end time.
      * The activity must not overlap with existing activities.
-     *
-     * @param toAdd Activity to be added to schedule.
      */
     public void add(Activity toAdd) {
         requireNonNull(toAdd);
-        if (DayAndTimeChecker.hasMismatchedStartAndEnd(toAdd)) {
+        if (hasActivity(toAdd)) {
+            throw new DuplicateActivityException();
+        }
+        if (hasMismatchedTime(toAdd)) {
             throw new MismatchedTimeException();
         }
-        if (DayAndTimeChecker.hasNoOverlapWithOtherActivities(toAdd, activities)) {
+        if (hasOverlap(toAdd)) {
             throw new OverlappingActivityException();
         }
         activities.add(toAdd);
     }
 
+    /**
+     * Deletes an activity from the schedule.
+     * The activity must exist in the schedule.
+     */
+    public void delete(Activity toDelete) {
+        requireNonNull(toDelete);
+        if (!activities.remove(toDelete)) {
+            throw new ActivityNotFoundException();
+        }
+    }
+
+    /**
+     * Returns the activities as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Activity> asUnmodifiableObservableList() {
+        return unmodifiableActivities;
+    }
+
     @Override
     public int hashCode() {
         return activities.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return activities.toString();
+    }
+
+    @Override
+    public ObservableList<Activity> getActivities() {
+        return asUnmodifiableObservableList();
     }
 }

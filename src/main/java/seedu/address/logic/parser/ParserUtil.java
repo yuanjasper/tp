@@ -15,6 +15,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.schedule.activity.Day;
+import seedu.address.model.schedule.activity.Info;
+import seedu.address.model.schedule.activity.Timeslot;
 import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
@@ -180,5 +183,38 @@ public class ParserUtil {
             contactSet.add(parseContact(contactNumber));
         }
         return contactSet;
+    }
+
+    /**
+     * Parses a {@code String info} into an {@code Info}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code info} is invalid.
+     */
+    public static Info parseInfo(String info) throws ParseException {
+        requireNonNull(info);
+        String trimmedInfo = info.trim();
+        if (!Info.isValidInfo(trimmedInfo)) {
+            throw new ParseException(Info.MESSAGE_CONSTRAINTS);
+        }
+        return new Info(trimmedInfo);
+    }
+
+    public static Day parseDay(String day) throws ParseException {
+        requireNonNull(day);
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+        return new Day(trimmedDay);
+    }
+
+    public static Timeslot parseTimeslot(String timeslot) throws ParseException {
+        requireNonNull(timeslot);
+        String trimmedTimeslot = timeslot.trim();
+        if (!Timeslot.isValidTimeslot(trimmedTimeslot)) {
+            throw new ParseException(Timeslot.MESSAGE_CONSTRAINTS);
+        }
+        return new Timeslot(trimmedTimeslot);
     }
 }

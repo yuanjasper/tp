@@ -13,6 +13,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.activity.Activity;
+import seedu.address.model.schedule.activity.Day;
+import seedu.address.model.schedule.activity.Info;
+import seedu.address.model.schedule.activity.Timeslot;
 import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
@@ -72,6 +78,24 @@ public class SampleDataUtil {
         return Arrays.stream(strings)
                 .map(BillingContact::new)
                 .collect(Collectors.toSet());
+    }
+
+    public static Activity[] getSampleActivities() {
+        return new  Activity[] {
+                new Activity(new Info("CS2103 Lecture"), new Day("friday"), new Timeslot("16:00-18:00")),
+                new Activity(new Info("CS2103 Tutorial"), new Day("friday"), new Timeslot("09:00-10:00")),
+                new Activity(new Info("CS2103 group meeting"), new Day("wednesday"), new Timeslot("17:00-18:00")),
+                new Activity(new Info("CCA"), new Day("thursday"), new Timeslot("18:00-20:00")),
+                new Activity(new Info("Extra lesson"), new Day("sunday"), new Timeslot("14:30-16:00")),
+        };
+    }
+
+    public static ReadOnlySchedule getSampleSchedule() {
+        Schedule sampleSchedule = new Schedule();
+        for (Activity  sampleActivity : getSampleActivities()) {
+            sampleSchedule.add(sampleActivity);
+        }
+        return sampleSchedule;
     }
 
 }

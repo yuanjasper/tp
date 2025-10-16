@@ -14,6 +14,9 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.activity.Activity;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -22,24 +25,26 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final Schedule schedule;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule, ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(addressBook, schedule, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.schedule = new Schedule(schedule);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new Schedule(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -77,6 +82,17 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
+    @Override
+    public Path getScheduleFilePath() {
+        return userPrefs.getScheduleFilePath();
+    }
+
+    @Override
+    public void setScheduleFilePath(Path scheduleFilePath) {
+        requireNonNull(scheduleFilePath);
+        userPrefs.setScheduleFilePath(scheduleFilePath);
+    }
+
     //=========== AddressBook ================================================================================
 
     @Override
@@ -111,6 +127,46 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+    }
+
+    //=========== Schedule ===================================================================================
+
+    @Override
+    public void setSchedule(ReadOnlySchedule schedule) {
+        this.schedule.resetData(schedule);
+    }
+
+    @Override
+    public ReadOnlySchedule getSchedule() {
+        return schedule;
+    }
+
+    @Override
+    public boolean hasActivity(Activity activity) {
+        requireNonNull(activity);
+        return schedule.hasActivity(activity);
+    }
+
+    @Override
+    public boolean hasMismatchedTime(Activity activity) {
+        requireNonNull(activity);
+        return schedule.hasMismatchedTime(activity);
+    }
+
+    @Override
+    public boolean hasOverlap(Activity activity) {
+        requireNonNull(activity);
+        return schedule.hasOverlap(activity);
+    }
+
+    @Override
+    public void addActivity(Activity activity) {
+        schedule.add(activity);
+    }
+
+    @Override
+    public void deleteActivity(Activity activity) {
+        schedule.delete(activity);
     }
 
     //=========== Filtered Person List Accessors =============================================================

@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
-import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.activity.Activity;
 
 /**
  * Container for user visible messages.
@@ -62,13 +62,11 @@ public class Messages {
      */
     public static String format(Activity activity) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(activity.getDescription())
+        builder.append(activity.getInfo())
                 .append("; Day:  ")
                 .append(activity.getDay())
-                .append("; Start time: ")
-                .append(activity.getStartTime())
-                .append("; End time: ")
-                .append(activity.getEndTime());
+                .append("; Timeslot: ")
+                .append(activity.getTimeslot());
         return builder.toString();
     }
 
