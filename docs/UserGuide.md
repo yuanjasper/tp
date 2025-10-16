@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-TuitionSync is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TuitionSync can get your contact management tasks done faster than traditional GUI apps.
+TuitionSync is a **desktop app for private tutors managing tutees' contacts and tuition/personal scheduling, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TuitionSync can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -28,7 +28,7 @@ TuitionSync is a **desktop app for managing contacts, optimized for use via a Co
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01, d/wednesday s/16:00-18:00` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -58,9 +58,10 @@ TuitionSync is a **desktop app for managing contacts, optimized for use via a Co
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will cause an error.<br>
+  e.g. if the command specifies `help 123`, it will result in an error message.
 
+* All commands are case-sensitive. e.g. if the command specifies `Help`, it will cause an error as the `help` command should be lowercase.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
@@ -77,15 +78,15 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [b/BILLING_CONTACT] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/wednesday s/16:00-18:00 t/tutee b/98226544`
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/12345678 d/monday s/16:00-18:00 t/tutee t/cousin`
 
 ### Listing all persons : `list`
 
@@ -97,7 +98,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SLOT] [b/BILLING_CONTACT] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -128,6 +129,45 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Getting address : `getaddress`
+
+Gets the address of the specified person.
+
+Format: `getaddress  NAME`
+
+* The name specified is case-insensitive. e.g `hans` will match `Hans`
+* If there is more than one person that matches the NAME specified, an error message "There are multiple entries for search requirements" will be shown.
+* Tip: Make the NAME as specific as possible to avoid multiple matches.
+
+Examples: 
+* `getaddress John Doe` returns `John street, block 123, #01-01`
+
+### Getting billing contact : `getbillingcontact`
+
+Gets the billing contact of the specified person.
+
+Format: `getbillingcontact NAME`
+
+* The name specified is case-insensitive. e.g `hans` will match `Hans`
+* If there is more than one person that matches the NAME specified, an error message "There are multiple entries for search requirements" will be shown.
+* Tip: Make the NAME as specific as possible to avoid multiple matches.
+
+Examples:
+* `getbillingcontact John Doe` returns `98226544`
+
+### Getting email : `getemail`
+
+Gets the email of the specified person.
+
+Format: `getemail NAME`
+
+* The name specified is case-insensitive. e.g `hans` will match `Hans`
+* If there is more than one person that matches the NAME specified, an error message "There are multiple entries for search requirements" will be shown.
+* Tip: Make the NAME as specific as possible to avoid multiple matches.
+
+Examples:
+* `getemail John Doe` returns `johndoe@example.com`
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -141,6 +181,21 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+### Sorting tutees by tuition date : `sortbydate`
+
+Returns a list of tutees sorted by tution date first, then time slot of tuition.
+
+Format: `sortbydate`
+
+### Add activity : `addactivity`
+
+Adds an activity to your schedule. 
+
+Format: `addactivity ACTIVITY_DESCRIPTION DAY TIME`
+
+Examples:
+* `addactivity lesson friday 0900-1000`
 
 ### Clearing all entries : `clear`
 
@@ -164,6 +219,7 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
@@ -191,10 +247,15 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/tuesday /s 10:00-12:00 t/friend t/tutee`
+**Add activity** | `addactivity ACTIVITY_DESCRIPTION DAY TIME` <br> e.g., `addactivity dental friday 1600-1630`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Get Address** | `getaddress NAME` <br> e.g., `getaddress John Doe`
+**Get Billing Contact** | `getbillingcontact NAME` <br> e.g., `getbillingcontact John Doe`
+**Get Email** | `getemail NAME` <br> e.g., `getemail John Doe`
 **List** | `list`
 **Help** | `help`
+**Sort by date** | `sortbydate`
