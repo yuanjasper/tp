@@ -35,12 +35,16 @@ public class ModelManager implements Model {
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(addressBook, schedule, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + " ,schedule:" + schedule + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         this.schedule = new Schedule(schedule);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+    }
+
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
+        this(addressBook, new Schedule(), userPrefs);
     }
 
     public ModelManager() {
