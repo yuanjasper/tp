@@ -7,9 +7,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -20,6 +22,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
 import seedu.address.model.tag.BillingContact;
@@ -38,7 +41,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_TAG, PREFIX_CONTACT);
+                        PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_TAG, PREFIX_CONTACT, PREFIX_REMARK);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_DATE, PREFIX_SLOT)
@@ -56,8 +59,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         TuitionSlot slot = ParserUtil.parseSlot(argMultimap.getValue(PREFIX_SLOT).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<BillingContact> contactList = ParserUtil.parseContacts(argMultimap.getAllValues(PREFIX_CONTACT));
+        Optional<String> remarkValue = argMultimap.getValue(PREFIX_REMARK);
+        Remark remark = new Remark(remarkValue.orElse("NIL"));
 
-        Person person = new Person(name, phone, email, address, date, slot, tagList, contactList);
+        Person person = new Person(name, phone, email, address, date, slot, tagList, contactList, remark);
 
         return new AddCommand(person);
     }

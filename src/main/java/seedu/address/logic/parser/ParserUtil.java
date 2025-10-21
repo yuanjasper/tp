@@ -13,6 +13,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
 import seedu.address.model.schedule.activity.Day;
@@ -229,4 +230,13 @@ public class ParserUtil {
         }
         return new Timeslot(trimmedTimeslot);
     }
+
+    public static Remark parseRemark(String remark) throws ParseException {
+        requireNonNull(remark);
+        if (remark.trim().isEmpty()) {
+            return new Remark("NIL");
+        }
+        return new Remark(remark.trim());
+    }
+
 }
