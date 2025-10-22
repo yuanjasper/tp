@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import java.time.LocalTime;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.schedule.activity.Activity;
@@ -41,8 +42,30 @@ public class DayAndTimeChecker {
         return false;
     }
 
-    public static boolean isNotSameDay(Activity activity, Activity existingActivity) {
-        return !activity.getDay().equals(existingActivity.getDay());
+    /**
+     * Returns an {@code Optional<Activity>} if an activity with the specified day and timeslot is found
+     * from the schedule, returns an {@code Optional<Empty>} otherwise.
+     */
+    public static Optional<Activity> getSameDateTimeActivity(Activity activity, ObservableList<Activity> activities) {
+        String[] activityTimings = activity.getTimeslot().value.split("-");
+        LocalTime startTime = LocalTime.parse(activityTimings[0]);
+        LocalTime endTime = LocalTime.parse(activityTimings[1]);
+        for (Activity existingActivity : activities) {
+            String[] existingActivityTimings = existingActivity.getTimeslot().value.split("-");
+            LocalTime existingStartTime = LocalTime.parse(existingActivityTimings[0]);
+            LocalTime existingEndTime = LocalTime.parse(existingActivityTimings[1]);
+            if (isNotSameDay(activity, existingActivity)) {
+                continue;
+            }
+            if (!isEqual(startTime, existingStartTime)) {
+                continue;
+            }
+            if (!isEqual(endTime, existingEndTime)) {
+                continue;
+            }
+            return Optional.of(existingActivity);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -53,6 +76,14 @@ public class DayAndTimeChecker {
         LocalTime startTime = LocalTime.parse(activityTimings[0]);
         LocalTime endTime = LocalTime.parse(activityTimings[1]);
         return isEqualOrAfter(startTime, endTime);
+    }
+
+    private static boolean isNotSameDay(Activity activity, Activity existingActivity) {
+        return !activity.getDay().equals(existingActivity.getDay());
+    }
+
+    private static boolean isEqual(LocalTime first, LocalTime second) {
+        return first.equals(second);
     }
 
     private static boolean isEqualOrAfter(LocalTime first, LocalTime second) {

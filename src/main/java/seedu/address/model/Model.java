@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -146,6 +147,11 @@ public interface Model {
      * Returns true if the {@code activity} overlaps with those already in schedule.
      */
     boolean hasOverlap(Activity activity);
+
+    /**
+     * Gets an {@code Optional<Activity>} from schedule if it has the specified day and timeslot.
+     */
+    Optional<Activity> getSameDateTimeActivity(Activity activity);
 
     /**
      * Adds an activity to the schedule.
