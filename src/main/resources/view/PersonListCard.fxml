@@ -9,8 +9,16 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
+    <VBox alignment="CENTER" prefWidth="80" prefHeight="105" spacing="10">
+        <ImageView fx:id="displayPicture"
+                   fitHeight="80"
+                   fitWidth="80"
+                   pickOnBounds="true"
+                   preserveRatio="true" />
+    </VBox>
+    <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
