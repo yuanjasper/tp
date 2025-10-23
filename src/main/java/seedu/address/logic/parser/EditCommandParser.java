@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -37,7 +38,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_TAG, PREFIX_CONTACT);
+                        PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_TAG, PREFIX_CONTACT, PREFIX_REMARK);
 
         Index index;
 
@@ -48,7 +49,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT);
+                PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_REMARK);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -69,6 +70,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_SLOT).isPresent()) {
             editPersonDescriptor.setSlot(ParserUtil.parseSlot(argMultimap.getValue(PREFIX_SLOT).get()));
+        }
+        if (argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            editPersonDescriptor.setRemark(ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         parseContactsForEdit(argMultimap.getAllValues(PREFIX_CONTACT)).ifPresent(editPersonDescriptor::setContacts);

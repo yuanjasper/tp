@@ -8,6 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
 import seedu.address.model.tag.BillingContact;
@@ -25,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_DATE = "Wednesday";
     public static final String DEFAULT_SLOT = "16:00-18:00";
+    public static final String DEFAULT_REMARK = "New tutee";
 
     private Name name;
     private Phone phone;
@@ -34,6 +36,7 @@ public class PersonBuilder {
     private TuitionSlot slot;
     private Set<Tag> tags;
     private Set<BillingContact> contacts;
+    private Remark remark;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -47,6 +50,7 @@ public class PersonBuilder {
         slot = new TuitionSlot(DEFAULT_SLOT);
         tags = new HashSet<>();
         contacts = new HashSet<>();
+        remark = new Remark(DEFAULT_REMARK);
 
     }
 
@@ -62,6 +66,7 @@ public class PersonBuilder {
         slot = personToCopy.getSlot();
         tags = new HashSet<>(personToCopy.getTags());
         contacts = new HashSet<>(personToCopy.getContacts());
+        remark = personToCopy.getRemark();
     }
 
     /**
@@ -129,8 +134,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, date, slot, tags, contacts);
+        return new Person(name, phone, email, address, date, slot, tags, contacts, remark);
     }
 
 }

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -29,6 +30,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.TuitionDate;
 import seedu.address.model.person.TuitionSlot;
 import seedu.address.model.tag.BillingContact;
@@ -51,6 +53,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_SLOT + "SLOT] "
+            + "[" + PREFIX_REMARK +  "REMARK] "
             + "[" + PREFIX_TAG + "TAG]... "
             + "[" + PREFIX_CONTACT + "BILLING CONTACT]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -112,9 +115,10 @@ public class EditCommand extends Command {
         TuitionSlot updatedSlot = editPersonDescriptor.getSlot().orElse(personToEdit.getSlot());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<BillingContact> updatedContacts = editPersonDescriptor.getContacts().orElse(personToEdit.getContacts());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedDate, updatedSlot, updatedTags, updatedContacts);
+                updatedDate, updatedSlot, updatedTags, updatedContacts, updatedRemark);
     }
 
     @Override
@@ -154,6 +158,7 @@ public class EditCommand extends Command {
         private TuitionSlot slot;
         private Set<Tag> tags;
         private Set<BillingContact> contacts;
+        private Remark remark;
 
         public EditPersonDescriptor() {}
 
@@ -170,13 +175,14 @@ public class EditCommand extends Command {
             setSlot(toCopy.slot);
             setTags(toCopy.tags);
             setContacts(toCopy.contacts);
+            setRemark(toCopy.remark);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, date, slot, tags, contacts);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, date, slot, tags, contacts, remark);
         }
 
         public void setName(Name name) {
@@ -226,6 +232,10 @@ public class EditCommand extends Command {
         public Optional<TuitionSlot> getSlot() {
             return Optional.ofNullable(slot);
         }
+
+        public void setRemark(Remark remark) { this.remark = remark; }
+
+        public Optional<Remark> getRemark() { return Optional.ofNullable(remark); }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
@@ -280,7 +290,8 @@ public class EditCommand extends Command {
                     && Objects.equals(date, otherEditPersonDescriptor.date)
                     && Objects.equals(slot, otherEditPersonDescriptor.slot)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(contacts, otherEditPersonDescriptor.contacts);
+                    && Objects.equals(contacts, otherEditPersonDescriptor.contacts)
+                    && Objects.equals(remark, otherEditPersonDescriptor.remark);
         }
 
         @Override
@@ -294,6 +305,7 @@ public class EditCommand extends Command {
                     .add("slot", slot)
                     .add("tags", tags)
                     .add("contacts", contacts)
+                    .add("remark", remark)
                     .toString();
         }
     }

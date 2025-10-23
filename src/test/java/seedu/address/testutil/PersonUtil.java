@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -46,6 +47,7 @@ public class PersonUtil {
         person.getContacts().stream().forEach(
                 s -> sb.append(PREFIX_CONTACT + s.contact + " ")
         );
+        sb.append(PREFIX_REMARK + person.getRemark().value + " ");
         return sb.toString();
     }
 
@@ -76,6 +78,7 @@ public class PersonUtil {
                 contacts.forEach(s -> sb.append(PREFIX_CONTACT).append(s.contact).append(" "));
             }
         }
+        descriptor.getRemark().ifPresent(remark -> sb.append(PREFIX_REMARK).append(remark.value).append(" "));
         return sb.toString();
     }
 }
