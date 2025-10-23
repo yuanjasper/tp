@@ -4,10 +4,13 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Circle;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -46,6 +49,9 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private FlowPane contacts;
+    @FXML
+    private ImageView displayPicture;
+
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -66,5 +72,14 @@ public class PersonCard extends UiPart<Region> {
         person.getContacts().stream()
                 .sorted(Comparator.comparing(contactname -> contactname.contact))
                 .forEach(contactname -> contacts.getChildren().add(new Label(contactname.contact)));
+
+        String imagePath = person.getImagePath();
+        Image img = new Image(getClass().getResourceAsStream(imagePath));
+
+        displayPicture.setImage(img);
+
+        double radius = Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) / 2;
+        Circle clip = new Circle(radius, radius, radius);
+        displayPicture.setClip(clip);
     }
 }

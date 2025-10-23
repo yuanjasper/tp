@@ -21,6 +21,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final String imagePath;
 
     // Data fields
     private final Address address;
@@ -43,6 +44,7 @@ public class Person {
         this.slot = slot;
         this.tags.addAll(tags);
         this.contacts.addAll(contacts);
+        this.imagePath = "/images/default-avatar.png";
     }
 
     public Name getName() {
@@ -67,6 +69,10 @@ public class Person {
 
     public TuitionSlot getSlot() {
         return slot;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 
     /**
