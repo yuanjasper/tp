@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.activity.Activity;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -119,6 +122,14 @@ public class AddCommandTest {
         }
 
         @Override
+        public Path getScheduleFilePath() { throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public void setScheduleFilePath(Path scheduleFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
@@ -134,7 +145,38 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setSchedule(ReadOnlySchedule newSchedule) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlySchedule getSchedule() { throw new AssertionError("This method should not be called."); }
+
+        @Override
         public boolean hasPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasActivity(Activity activity) { throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public boolean hasMismatchedTime(Activity activity) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasOverlap(Activity activity) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addActivity(Activity activity) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteActivity(Activity activity) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -155,6 +197,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByDate(Comparator<Person> comparator) {
             throw new AssertionError("This method should not be called.");
         }
     }
