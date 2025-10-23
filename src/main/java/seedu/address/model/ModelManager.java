@@ -225,6 +225,7 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
+                && schedule.equals(otherModelManager.schedule)
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 

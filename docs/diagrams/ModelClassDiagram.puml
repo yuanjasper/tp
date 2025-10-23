@@ -18,7 +18,10 @@ Class Address
 Class Email
 Class Name
 Class Phone
+Class TuitionDate
+Class TuitionDateSlot
 Class Tag
+Class BillingContacts
 Class Remark
 
 Class I #FFFFFF
@@ -42,7 +45,10 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> TuitionDate
+Person *--> TuitionSlot
 Person *--> "*" Tag
+Person *--> "*" Billing Contact
 Person *--> "*" Remark
 
 Person -[hidden]up--> I
