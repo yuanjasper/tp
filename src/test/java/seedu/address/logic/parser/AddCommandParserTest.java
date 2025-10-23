@@ -17,6 +17,8 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.SLOT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.SLOT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
@@ -59,7 +61,7 @@ public class AddCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + DATE_DESC_AMY + SLOT_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + ADDRESS_DESC_BOB + DATE_DESC_AMY + SLOT_DESC_BOB + TAG_DESC_FRIEND + REMARK_DESC_BOB, new AddCommand(expectedPerson));
 
 
         // multiple tags - all accepted
@@ -67,7 +69,7 @@ public class AddCommandParserTest {
                 .build();
         assertParseSuccess(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DATE_DESC_AMY
-                        + SLOT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + SLOT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + REMARK_DESC_BOB,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
@@ -142,7 +144,7 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + DATE_DESC_AMY + SLOT_DESC_AMY,
+                + DATE_DESC_AMY + SLOT_DESC_AMY + REMARK_DESC_AMY,
                 new AddCommand(expectedPerson));
     }
 

@@ -51,6 +51,7 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane contacts;
     @FXML
     private Label remark;
+    @FXML
     private ImageView displayPicture;
 
 

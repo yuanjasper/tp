@@ -140,4 +140,16 @@ public class Schedule implements ReadOnlySchedule {
     public ObservableList<Activity> getActivities() {
         return asUnmodifiableObservableList();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Schedule)) {
+            return false;
+        }
+        Schedule otherSchedule = (Schedule) other;
+        return this.activities.equals(otherSchedule.activities);
+    }
 }
