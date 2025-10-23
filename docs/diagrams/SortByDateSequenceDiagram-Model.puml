@@ -1,0 +1,38 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":SortedList<Person>" as SortedList MODEL_COLOR
+end box
+
+[-> Model : updateFilteredPersonList(IS_TUTEE)
+activate Model
+Model -> Model : setPredicate(IS_TUTEE)
+[<-- Model
+deactivate Model
+
+[-> Model : getFilteredPersonList()
+activate Model
+[<--Model : FilteredList<Person>
+deactivate Model
+
+[-> Model : sortListByDate(BY_DATE_THEN_SLOT)
+activate Model
+
+create SortedList
+Model -> SortedList : new SortedList(filteredPersons)
+activate SortedList
+SortedList--> Model
+deactivate SortedList
+
+Model -> SortedList : setComparator(BY_DATE_THEN_SLOT)
+activate SortedList
+SortedList --> Model
+deactivate SortedList
+
+Model -> Model : setAll(SortedList)
+[<-- Model
+deactivate Model
+@enduml

@@ -155,6 +155,18 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Sortbydate feature
+
+Given below shows the sequence diagram of how the sortbydate command goes through the Logic component.
+
+![SortSequenceDiagram](images/SortByDateSequenceDiagram-Logic.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `SortCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+The calls to Model class shown above are shown in detail in the sequence diagram below. 
+
+![SortSequenceDiagram](images/SortByDateSequenceDiagram-Model.png)
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
