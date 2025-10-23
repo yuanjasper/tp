@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,7 +56,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Returns true if an activity with the same information as {@code activity} exists in schedule.
+     * Returns true if an activity with the same information as {@code toCheck} exists in schedule.
      */
     public boolean hasActivity(Activity toCheck) {
         requireNonNull(toCheck);
@@ -63,7 +64,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Returns true if the {@code activity} has mismatched start and end time.
+     * Returns true if the {@code toCheck} has mismatched start and end time.
      */
     public boolean hasMismatchedTime(Activity toCheck) {
         requireNonNull(toCheck);
@@ -71,11 +72,20 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Returns true if the {@code activity} overlaps with those already in schedule.
+     * Returns true if the {@code toCheck} overlaps with those already in schedule.
      */
     public boolean hasOverlap(Activity toCheck) {
         requireNonNull(toCheck);
         return DayAndTimeChecker.hasOverlapWithOtherActivities(toCheck, activities);
+    }
+
+    /**
+     * Returns an {@code Optional<Activity>} if an activity with the specified day and timeslot is found
+     * from the schedule, returns an {@code Optional<Empty>} otherwise.
+     */
+    public Optional<Activity> getActivity(Activity toCheck) {
+        requireNonNull(toCheck);
+        return DayAndTimeChecker.getSameDateTimeActivity(toCheck, activities);
     }
 
     /**

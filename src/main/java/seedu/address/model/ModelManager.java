@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -157,6 +158,12 @@ public class ModelManager implements Model {
     public boolean hasOverlap(Activity activity) {
         requireNonNull(activity);
         return schedule.hasOverlap(activity);
+    }
+
+    @Override
+    public Optional<Activity> getSameDateTimeActivity(Activity activity) {
+        requireNonNull(activity);
+        return schedule.getActivity(activity);
     }
 
     @Override

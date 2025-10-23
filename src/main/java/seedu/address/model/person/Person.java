@@ -21,6 +21,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final String imagePath;
 
     // Data fields
     private final Address address;
@@ -46,6 +47,7 @@ public class Person {
         this.tags.addAll(tags);
         this.contacts.addAll(contacts);
         this.remark = remark;
+        this.imagePath = "/images/default-avatar.png";
     }
 
     public Name getName() {
@@ -73,6 +75,10 @@ public class Person {
     }
 
     public Remark getRemark() { return remark;}
+    
+    public String getImagePath() {
+        return imagePath;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
