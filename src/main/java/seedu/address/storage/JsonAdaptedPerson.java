@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -38,6 +39,10 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedContact> contacts = new ArrayList<>();
     private final String remark;
 
+    //Billing fields
+    private final Integer unpaidHours;
+    private final Double amountOwed;
+
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
@@ -47,7 +52,9 @@ class JsonAdaptedPerson {
                              @JsonProperty("date") String date, @JsonProperty("slot") String slot,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("contacts") List<JsonAdaptedContact> contacts,
-                             @JsonProperty("remark") String remark) {
+                             @JsonProperty("remark") String remark,
+                             @JsonProperty("unpaidHours") Integer unpaidHours,
+                             @JsonProperty("amountOwed") Double amountOwed) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -62,6 +69,8 @@ class JsonAdaptedPerson {
         if (contacts != null) {
             this.contacts.addAll(contacts);
         }
+        this.unpaidHours = unpaidHours;
+        this.amountOwed = amountOwed;
     }
 
     /**
@@ -81,10 +90,21 @@ class JsonAdaptedPerson {
         contacts.addAll(source.getContacts().stream()
                 .map(JsonAdaptedContact::new)
                 .collect(Collectors.toList()));
+
+
+        // If it’s a BillablePerson, store its extra fields
+        if (source instanceof BillablePerson) {
+            BillablePerson bp = (BillablePerson) source;
+            unpaidHours = bp.getUnpaidHours();
+            amountOwed = bp.getAmountOwed();
+        } else {
+            unpaidHours = null;
+            amountOwed = null;
+        }
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted person object into the model's {@code Person} or {@code BillablePerson} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
@@ -155,6 +175,20 @@ class JsonAdaptedPerson {
         final Set<Tag> modelTags = new HashSet<>(personTags);
         final Set<BillingContact> modelContacts = new HashSet<>(personContacts);
         final Remark modelRemark = new Remark(remark == null ? "NIL" : remark);
+
+        // Construct BillablePerson if tagged as tutee
+        boolean isTutee = modelTags.stream()
+                .anyMatch(tag -> tag.tagName.equalsIgnoreCase("tutee"));
+
+        if (isTutee) {
+            int modelUnpaidHours = unpaidHours == null ? 0 : unpaidHours;
+            double modelAmountOwed = amountOwed == null ? 0.0 : amountOwed;
+            return new BillablePerson(modelName, modelPhone, modelEmail, modelAddress,
+                    modelDate, modelSlot, modelTags, modelContacts, modelRemark,
+                    modelUnpaidHours, modelAmountOwed);
+        }
+
+        //Otherwise, return normal person
         return new Person(modelName, modelPhone, modelEmail, modelAddress,
                 modelDate, modelSlot, modelTags, modelContacts, modelRemark);
     }

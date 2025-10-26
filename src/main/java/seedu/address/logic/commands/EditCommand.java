@@ -26,6 +26,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -101,7 +102,7 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * Creates and returns a {@code Person} (or {@code BillablePerson}) with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
@@ -117,8 +118,27 @@ public class EditCommand extends Command {
         Set<BillingContact> updatedContacts = editPersonDescriptor.getContacts().orElse(personToEdit.getContacts());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedDate, updatedSlot, updatedTags, updatedContacts, updatedRemark);
+        // Check if this person is a tutee
+        boolean isTutee = updatedTags.stream()
+                .anyMatch(tag -> tag.tagName.equalsIgnoreCase("tutee"));
+
+        // Preserve billing data if this was already a BillablePerson
+        if (isTutee) {
+            int unpaidHour = 0;
+            double amountOwed = 0.0;
+
+            if (personToEdit instanceof BillablePerson) {
+                BillablePerson billable = (BillablePerson) personToEdit;
+                unpaidHour = billable.getUnpaidHours();
+                amountOwed = billable.getAmountOwed();
+            }
+
+            return new BillablePerson(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedDate, updatedSlot, updatedTags, updatedContacts, updatedRemark, unpaidHour, amountOwed);
+        } else {
+            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedDate, updatedSlot, updatedTags, updatedContacts, updatedRemark);
+        }
     }
 
     @Override

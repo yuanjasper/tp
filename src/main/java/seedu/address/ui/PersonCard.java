@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Person;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
@@ -53,6 +54,10 @@ public class PersonCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private ImageView displayPicture;
+    @FXML
+    private Label unpaidHours;
+    @FXML
+    private Label amountOwed;
 
 
     /**
@@ -84,5 +89,15 @@ public class PersonCard extends UiPart<Region> {
         double radius = Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) / 2;
         Circle clip = new Circle(radius, radius, radius);
         displayPicture.setClip(clip);
+
+        if (person instanceof BillablePerson) {
+            BillablePerson bp = (BillablePerson) person;
+            unpaidHours.setText("Unpaid Hours: " + bp.getUnpaidHours());
+            amountOwed.setText(String.format("Amount Owed: $%.2f", bp.getAmountOwed()));
+        } else {
+            unpaidHours.setText("");
+            amountOwed.setText("");
+        }
+
     }
 }
