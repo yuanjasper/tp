@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -12,6 +13,7 @@ import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Person;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
+import seedu.address.model.person.Person;
 
 /**
  * An UI component that displays information of a {@code Person}.
