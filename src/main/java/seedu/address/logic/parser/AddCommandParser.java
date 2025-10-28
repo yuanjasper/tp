@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -62,7 +63,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         Optional<String> remarkValue = argMultimap.getValue(PREFIX_REMARK);
         Remark remark = new Remark(remarkValue.orElse("NIL"));
 
-        Person person = new Person(name, phone, email, address, date, slot, tagList, contactList, remark);
+        Person person;
+        if (tagList.contains(new Tag("tutee"))) {
+            person = new BillablePerson(name, phone, email, address, date, slot, tagList, contactList, remark, 0, 0.0);
+        } else {
+            person = new Person(name, phone, email, address, date, slot, tagList, contactList, remark);
+        }
 
         return new AddCommand(person);
     }

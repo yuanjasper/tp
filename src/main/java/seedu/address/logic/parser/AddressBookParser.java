@@ -15,13 +15,16 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteActivityCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditHoursCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.GetAddressCommand;
+import seedu.address.logic.commands.GetAmountOwedCommand;
 import seedu.address.logic.commands.GetBillingContactCommand;
 import seedu.address.logic.commands.GetEmailCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PaidFullCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -115,6 +118,15 @@ public class AddressBookParser {
 
         case DeleteActivityCommand.COMMAND_WORD:
             return new DeleteActivityCommandParser().parse(arguments);
+
+        case PaidFullCommand.COMMAND_WORD:
+            return new PaidFullCommandParser().parse(arguments);
+
+        case GetAmountOwedCommand.COMMAND_WORD:
+            return new GetAmountOwedCommandParser().parse(arguments);
+
+        case EditHoursCommand.COMMAND_WORD:
+            return new EditHoursCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

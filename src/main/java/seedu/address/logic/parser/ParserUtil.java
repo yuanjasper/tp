@@ -243,4 +243,20 @@ public class ParserUtil {
         return new Remark(remark.trim());
     }
 
+    /**
+     * Parses a {@code String intString} into an {@code int}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code intString} is not a valid integer.
+     */
+    public static int parseInt(String intString) throws ParseException {
+        requireNonNull(intString);
+        String trimmed = intString.trim();
+        try {
+            return Integer.parseInt(trimmed);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Input is not a valid integer: " + trimmed, e);
+        }
+    }
+
 }

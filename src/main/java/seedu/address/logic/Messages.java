@@ -21,6 +21,9 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_NO_USER = "No such user exists!";
     public static final String MESSAGE_MULTIPLE_ENTRIES = "There are multiple entries for search requirements";
+    public static final String MESSAGE_INVALID_BILLABLE_PERSON = "This person is not a tutee! No bill records found";
+    public static final String MESSAGE_INVALID_BILLING = "Tutee has no outstanding bills!";
+    public static final String MESSAGE_EXCESS_BILLING = "Amount collected exceeds outstanding bills! Check your input again.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -36,6 +39,7 @@ public class Messages {
 
     /**
      * Formats the {@code person} for display to the user.
+     * Includes billing information if the person is a {@code BillablePerson}.
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
@@ -54,6 +58,15 @@ public class Messages {
         person.getTags().forEach(builder::append);
         builder.append("; Billing Contacts: ");
         person.getContacts().forEach(builder::append);
+        if (person instanceof seedu.address.model.person.BillablePerson) {
+            seedu.address.model.person.BillablePerson billable =
+                    (seedu.address.model.person.BillablePerson) person;
+
+            builder.append("; Unpaid Hours: ")
+                    .append(billable.getUnpaidHours())
+                    .append("; Amount Owed: $")
+                    .append(String.format("%.2f", billable.getAmountOwed()));
+        }
         return builder.toString();
     }
 

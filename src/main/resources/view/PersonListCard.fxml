@@ -46,6 +46,14 @@
         <Region minHeight="5" />
         <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
             <VBox spacing="3" style="-fx-padding: 10;">
+                <Label text="Billing details:" style="-fx-font-weight: bold;" />
+                <Label fx:id="unpaidHours" styleClass="cell_small_label" />
+                <Label fx:id="amountOwed" styleClass="cell_small_label" />
+            </VBox>
+        </AnchorPane>
+        <Region minHeight="5" />
+        <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
+            <VBox spacing="3" style="-fx-padding: 10;">
                 <Label text="Remarks:" style="-fx-font-weight: bold;" />
                 <Label fx:id="remark" wrapText="true" />
             </VBox>
