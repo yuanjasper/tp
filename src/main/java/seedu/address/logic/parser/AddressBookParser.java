@@ -25,6 +25,7 @@ import seedu.address.logic.commands.GetEmailCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PaidFullCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -106,6 +107,12 @@ public class AddressBookParser {
                 throw new ParseException("Invalid command, use ‘help’ instead.");
             }
             return new HelpCommand();
+
+        case ScheduleCommand.COMMAND_WORD:
+            if (!arguments.trim().isEmpty()) {
+                throw new ParseException("Invalid command, use ‘schedule’ instead.");
+            }
+            return new ScheduleCommand();
 
         case SortCommand.COMMAND_WORD:
             if (!arguments.trim().isEmpty()) {

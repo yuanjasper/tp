@@ -167,7 +167,7 @@ The calls to Model class shown above are shown in detail in the sequence diagram
 
 ![SortSequenceDiagram](images/SortByDateSequenceDiagram-Model.png)
 
-### \[Proposed\] Undo/redo feature
+### Schedule feature
 
 #### Proposed Implementation
 
@@ -250,11 +250,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -402,6 +397,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
     Use case ends.
+
+**Use Case: Edit a person**
+
+Assumption: User can already view the person that they wish to edit
+
+**MSS**
+
+1. User requests to edit person at a certain index and the fields to be changed
+2. TuitionSync edits the person at the specified index, changing the specified fields
+
+**Extensions**
+
+* 1a. User enters details with incorrect format.
+    * 1a1. TuitionSync shows an error message.
+
+      Use case resumes at step 1.
 
 ### Non-Functional Requirements
 **Performance**

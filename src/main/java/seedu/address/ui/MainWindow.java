@@ -189,6 +189,14 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            if (commandResult.isPersonList()) {
+                handleShowPersonList();
+            }
+
+            if (commandResult.isSchedule()) {
+                handleShowSchedule();
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
@@ -205,17 +213,11 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private void handleShowSchedule() {
+        // Clear the current panel (e.g., person list)
+        panelPlaceholder.getChildren().clear();
 
+        // Load and show the Schedule view
         scheduleWindow = new ScheduleWindow(logic.getSchedule());
         panelPlaceholder.getChildren().add(scheduleWindow.getRoot());
-
-        resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
-
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
-        CommandBox commandBox = new CommandBox(this::executeCommand);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 }

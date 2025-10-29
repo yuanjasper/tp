@@ -188,6 +188,14 @@ Returns a list of tutees sorted by tuition date first, then time slot of tuition
 
 Format: `sortbydate`
 
+### Listing all persons : `schedule`
+
+Shows a list of your current schedule
+
+![result for 'schedule'](images/schedule.png)
+
+Format: `schedule`
+
 ### Add activity : `addactivity`
 
 Adds an activity to your schedule. 
@@ -197,9 +205,18 @@ Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 Examples:
 * `addactivity i/lesson d/friday s/09:00-10:00`
 
+### Add activity : `deleteactivity`
+
+Deletes an activity from your schedule.
+
+Format: `deleteactivity d/DAY s/TIMESLOT`
+
+Examples:
+* `deleteactivity d/friday s/09:00-10:00`
+
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the list of tutee of the address book.
 
 Format: `clear`
 
@@ -248,7 +265,8 @@ _Details coming soon ..._
 Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/tuesday /s 10:00-12:00 t/friend t/tutee`
-**Add activity** | `addactivity ACTIVITY_DESCRIPTION DAY TIME` <br> e.g., `addactivity dental friday 1600-1630`
+**Add activity** | `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT` <br> e.g., `addactivity i/lesson d/friday s/09:00-10:00`
+**Delete activity** | `deleteactivity d/DAY s/TIMESLOT` <br> e.g., `deleteactivity d/friday s/09:00-10:00`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
@@ -257,5 +275,6 @@ Action | Format, Examples
 **Get Billing Contact** | `getbillingcontact NAME` <br> e.g., `getbillingcontact John Doe`
 **Get Email** | `getemail NAME` <br> e.g., `getemail John Doe`
 **List** | `list`
+**Schedule** | `schedule`
 **Help** | `help`
 **Sort by date** | `sortbydate`
