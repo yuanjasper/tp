@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<!-- Used ChatGPT to assist -->
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           styleClass="pane-with-border">
+    <VBox spacing="10" alignment="CENTER">
+        <Label text="Schedule" style="-fx-font-size: 25px; -fx-font-weight: bold;" />
+
+        <TableView fx:id="scheduleTable">
+            <columns>
+                <TableColumn fx:id="dayColumn" text="Day" prefWidth="100"/>
+                <TableColumn fx:id="timeslotColumn" text="Time" prefWidth="100"/>
+                <TableColumn fx:id="infoColumn" text="Info" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </VBox>
+</StackPane>
