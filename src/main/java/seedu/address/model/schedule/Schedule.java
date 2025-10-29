@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.DayAndTimeChecker;
 import seedu.address.model.schedule.activity.Activity;
 import seedu.address.model.schedule.exceptions.ActivityNotFoundException;
@@ -81,7 +82,7 @@ public class Schedule implements ReadOnlySchedule {
 
     /**
      * Returns an {@code Optional<Activity>} if an activity with the specified day and timeslot is found
-     * from the schedule, returns an {@code Optional<Empty>} otherwise.
+     * from the schedule, returns an {@code Optional.empty()} otherwise.
      */
     public Optional<Activity> getActivity(Activity toCheck) {
         requireNonNull(toCheck);
@@ -134,7 +135,9 @@ public class Schedule implements ReadOnlySchedule {
 
     @Override
     public String toString() {
-        return activities.toString();
+        return new ToStringBuilder(this)
+                .add("activities", activities)
+                .toString();
     }
 
     @Override

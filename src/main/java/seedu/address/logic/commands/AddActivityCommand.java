@@ -35,7 +35,11 @@ public class AddActivityCommand extends Command {
 
     private final Activity activity;
 
+    /**
+     * Creates an AddActivityCommand to add the specified {@code Activity}.
+     */
     public AddActivityCommand(Activity activity) {
+        requireNonNull(activity);
         this.activity = activity;
     }
 

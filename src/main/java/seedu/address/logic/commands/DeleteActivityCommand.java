@@ -11,9 +11,6 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.schedule.activity.Activity;
-import seedu.address.model.schedule.activity.Day;
-import seedu.address.model.schedule.activity.Info;
-import seedu.address.model.schedule.activity.Timeslot;
 import seedu.address.model.schedule.activity.Tuition;
 
 /**
@@ -38,22 +35,19 @@ public class DeleteActivityCommand extends Command {
             + ", cannot be deleted via this command";
 
 
-    private final Day day;
-    private final Timeslot timeslot;
+    private final Activity toDelete;
 
     /**
      * Creates a DeleteActivityCommand based on the day and timeslot.
      */
-    public DeleteActivityCommand(Day day, Timeslot timeslot) {
-        this.day = day;
-        this.timeslot = timeslot;
+    public DeleteActivityCommand(Activity activity) {
+        toDelete = activity;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Activity toDelete = new Activity(new Info("to delete"), day, timeslot);
         Optional<Activity> activityInSchedule = model.getSameDateTimeActivity(toDelete);
         if (activityInSchedule.isEmpty()) {
             throw new CommandException(MESSAGE_ACTIVITY_NOT_FOUND);
@@ -78,15 +72,13 @@ public class DeleteActivityCommand extends Command {
         }
 
         DeleteActivityCommand otherDeleteActivityCommand = (DeleteActivityCommand) other;
-        return day.equals(otherDeleteActivityCommand.day)
-                && timeslot.equals(otherDeleteActivityCommand.timeslot);
+        return toDelete.equals(otherDeleteActivityCommand.toDelete);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("day", day)
-                .add("timeslot", timeslot)
+                .add("toDelete", toDelete)
                 .toString();
     }
 }

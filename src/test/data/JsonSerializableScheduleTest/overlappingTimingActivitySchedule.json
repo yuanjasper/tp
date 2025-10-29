@@ -1,0 +1,13 @@
+{
+  "activities": [ {
+    "type": "activity",
+    "info": "Activity 1",
+    "day": "Friday",
+    "timeslot": "09:00-10:00"
+  }, {
+    "type": "activity",
+    "info": "Activity 2 with overlapping timing with activity 1",
+    "day": "Friday",
+    "timeslot": "09:30-10:30"
+  } ]
+}
