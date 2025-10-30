@@ -32,7 +32,7 @@ public class DeleteActivityCommand extends Command {
     public static final String MESSAGE_DELETE_ACTIVITY_SUCCESS = "Deleted Activity: %1$s";
     public static final String MESSAGE_ACTIVITY_NOT_FOUND = "Activity not found";
     public static final String MESSAGE_ACTIVITY_IS_TUITION = "Specified date and timeslot is for a tuition"
-            + ", cannot be deleted via this command";
+            + ", cannot be deleted via this command. Tuition will be deleted when a tutee is deleted.";
 
 
     private final Activity toDelete;
