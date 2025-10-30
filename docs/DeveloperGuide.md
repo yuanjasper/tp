@@ -127,11 +127,6 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
 
 
 ### Storage component
@@ -141,8 +136,8 @@ The `Model` component,
 <img src="images/StorageClassDiagram.png" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* can save address book data, schedule data, and user preference data in JSON format, and read them back into corresponding objects.
+* inherits from `AddressBookStorage`, `ScheduleStorage` and `UserPrefStorage`, which means it can be treated as either one (if the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -166,8 +161,6 @@ Given below shows the sequence diagram of how the sortbydate command goes throug
 The calls to Model class shown above are shown in detail in the sequence diagram below. 
 
 ![SortSequenceDiagram](images/SortByDateSequenceDiagram-Model.png)
-
-### Schedule feature
 
 #### Proposed Implementation
 
@@ -276,32 +269,33 @@ _{more aspects and alternatives to be added}_
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-* Managing different clients: Tutee/Tutee’s Parents
+* Managing Tutee contacts
 * Managing timing conflicts: Tuition classes / Study schedule
-* Managing location conflicts
-* Tracking of Tutee’s learning topic status
+  * Note that we do not support activities that span across midnight. 
+* Tracking of billing status 
+* Tracking of Tutee’s learning topic status (via Remarks)
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                               | I want to …​                                        | So that I can…​                                              |
-|-----|---------------------------------------|-----------------------------------------------------|--------------------------------------------------------------|
-| `* * *` | new user                              | see information page                                | refer to instructions when I forget how to use the App       |
-| `* * *` | student                               | add my own schedule                                 | I can account for potential timetable conflicts with my own schedule|
-| `* * *` | student                               | delete my schedule                                  | I can free up the timeslot                           |
-| `* * *` | tuition teacher                       | add a tutee’s data                                  |  |
-| `* * *` | tuition teacher                       | delete a tutee's data                               |             |
-| `* * *` | tuition teacher                       | get the emails of all my current tutees             | I can email them their homework for the week        |
-| `* * *` | tuition teacher                       | get the billing contact of all my current tutees    | I can contact them about payment        |
-| `* * *` | tuition teacher                       | get the address of my tutee                         | I can proceed to the location for the lesson        |
-| `* * *` | tuition teacher                       | sort the list of tutees according to date of lesson | I can see more easily who I am teaching next        |
-| `* *` | tuition teacher                       | get the upcoming topic to be taught for my tutee    | I can prepare the materials necessary for the lesson        |
-| `* *` | tuition teacher                       | leave notes on what my tutee is weak in             | I know how to help them more        |
-| `* *` | tuition teacher and part-time student | have a daily overview of my activities for the day  | I know and can prepare for my day efficiently        |
-| `*` | tuition teacher | I can get suggested time slots for new tutees based on lesson date and duration  | I can slot in new tutees more easily        |
-| `*` | expert user                           | I can create shortcuts for tasks  | I can save time on frequently performed tasks        |
+| Priority | As a …​                               | I want to …​                                                                    | So that I can…​                                             |
+|-----|---------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `* * *` | new user                              | see information page                                                            | refer to instructions when I forget how to use the App      |
+| `* * *` | student                               | add my own schedule                                                             | I can account for potential timetable conflicts with my own schedule|
+| `* * *` | student                               | delete my schedule                                                              | I can free up the timeslot                          |
+| `* * *` | tuition teacher                       | add a tutee’s data                                                              |  |
+| `* * *` | tuition teacher                       | delete a tutee's data                                                           |             |
+| `* * *` | tuition teacher                       | get the emails of all my current tutees                                         | I can email them their homework for the week       |
+| `* * *` | tuition teacher                       | get the billing contact of all my current tutees                                | I can contact them about payment       |
+| `* * *` | tuition teacher                       | get the address of my tutee                                                     | I can proceed to the location for the lesson       |
+| `* * *` | tuition teacher                       | sort the list of tutees according to date of lesson                             | I can see more easily who I am teaching next       |
+| `* *` | tuition teacher                       | get the amount each tutee owes                                                  | I know how much I should be getting |
+| `* *` | tuition teacher                       | leave notes on what my tutee is weak in                                         | I know how to help them more        |
+| `* *` | tuition teacher and part-time student | have a daily overview of my activities for the day                              | I know and can prepare for my day efficiently       |
+| `*` | tuition teacher | I can get suggested time slots for new tutees based on lesson date and duration | I can slot in new tutees more easily       |
+| `*` | expert user                           | I can create shortcuts for tasks                                                | I can save time on frequently performed tasks       |
 
 
 ### Use cases
@@ -478,15 +472,51 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Showing current schedule
+1. Showing current schedule
+   1. Test case: `schedule` <br> Expected: Tutee list will be gone and instead a schedule view will be shown. Success message shown on status message.
+   2.    Test case: `schedule hh` <br> Nothing done. Error details shown in the status message.
 
-### Saving data
+### Adding an Activity 
+1. Adds an activity with the parameters of information (about the activity), date, and time.
+   1. Test case: `addactivity i/CCA d/wednesday s/15:00-16:00` <br> Expected: Activity added to the schedule in chronological order. Details of the added activity will be shown in the status message. 
+   2. Test case: `addactivity d/tuesday s/12:00-13:00` <br> Expected: No activity added. Error details shown in the status message.
+   3. Other incorrect test cases: `addactivity i/CCA s/12:00-13:00`, `addactivity i/ Class d/tuesday s/9:00-13:00` <br> Expected: Similar to previous.
 
-1. Dealing with missing/corrupted data files
+### Deleting an Activity 
+1. Deletes an activity specified by the time and time of the activity. 
+   1. Prerequisites: Activity slot needs to be exact and reflect an activity slot in the current schedule.
+   2. Prerequisites: Activity deleted cannot be a tuition slot, that was added via `add command` in address book.
+   2. Test case: `deleteactivity d/thursday s/18:00-20:00` <br> Expected: Deletes an activity. Deleted activity details will be shown on status message.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+### Editing unpaid hours 
+1. Editing the unpaid hours of a tutee while all tutees are being shown
+   1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list.
+   2. Test case: `edithours 1 h/7` <br> Expected: First contact in the list will now have 7 unpaid hours reflected.
+      Details of the edited contact shown in the status message.
+   3. Test case: `edithours 0 h/7` <br> Expected: No hours edited. Error details shown in the status message.
+   4. Test case: `edithours 1 h/-1` <br> Expected: No hours edited. Error details shown in the status message.
 
-1. _{ more test cases …​ }_
+
+### Indicating that a tutee has paid in full 
+1. Indicating that a tutee has paid his/her amount owed in full. 
+    1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list. 
+   2. Test case: `paidfull 3` <br> Expected: First contact in the list will now have 0 unpaid hours and $0.00 amount owed.
+      Details of the edited contact shown in the status message.
+   3. Other test cases: Refer to "Deleting a person" above
+ 
+
+### Getting the address of a tutee 
+1. Getting the address of a tutee using his/her name. 
+    1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list.
+   2. Test case: `getaddress David Li` <br> Expected: Retrieves the email of David Li, if such a person exists in the address book. Address will be shown in the status message, allowing users to copy it.
+   3. Test case: `getaddress Doe` <br> Expected: If there are 2 persons with the surname Doe in the address book, then no address will be returned. Error message shown in the status message.
+
+### Sorting by date
+1. Sorting tutees based on their tuition date first then slot timing. 
+   1. Test case: `sortbydate` <br> Expected: All tutees will be sorted and shown. Success message shown in status message. 
+   2. Test case: `sortbydate hh` <br> Nothing done. Error details shown in the status message.
+

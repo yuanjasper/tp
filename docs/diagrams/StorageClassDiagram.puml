@@ -22,6 +22,7 @@ Class JsonAddressBookStorage
 Class JsonSerializableAddressBook
 Class JsonAdaptedPerson
 Class JsonAdaptedTag
+Class JsonAdaptedContact
 }
 
 package "Schedule Storage" #F4F6F6 {
@@ -48,6 +49,7 @@ JsonScheduleStorage .up.|> ScheduleStorage
 JsonAddressBookStorage ..> JsonSerializableAddressBook
 JsonSerializableAddressBook --> "*" JsonAdaptedPerson
 JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonAdaptedPerson --> "*" JsonAdaptedContact
 JsonScheduleStorage ..> JsonSerializableSchedule
 JsonSerializableSchedule --> "*" JsonAdaptedActivity
 

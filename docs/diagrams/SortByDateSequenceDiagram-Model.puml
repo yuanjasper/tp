@@ -4,12 +4,11 @@ skinparam ArrowFontStyle plain
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
-participant ":SortedList<Person>" as SortedList MODEL_COLOR
 end box
 
-[-> Model : updateFilteredPersonList(IS_TUTEE)
+[-> Model : updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)
 activate Model
-Model -> Model : setPredicate(IS_TUTEE)
+Model -> Model : setPredicate(PREDICATE_SHOW_ALL_PERSONS)
 [<-- Model
 deactivate Model
 
@@ -21,18 +20,7 @@ deactivate Model
 [-> Model : sortListByDate(BY_DATE_THEN_SLOT)
 activate Model
 
-create SortedList
-Model -> SortedList : new SortedList(filteredPersons)
-activate SortedList
-SortedList--> Model
-deactivate SortedList
-
-Model -> SortedList : setComparator(BY_DATE_THEN_SLOT)
-activate SortedList
-SortedList --> Model
-deactivate SortedList
-
-Model -> Model : setAll(SortedList)
+Model -> Model : setComparator(BY_DATE_THEN_SLOT)
 [<-- Model
 deactivate Model
 @enduml
