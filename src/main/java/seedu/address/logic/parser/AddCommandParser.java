@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT);
+                PREFIX_ADDRESS, PREFIX_DATE, PREFIX_SLOT, PREFIX_REMARK);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -64,11 +64,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Remark remark = new Remark(remarkValue.orElse("NIL"));
 
         Person person;
-        if (tagList.contains(new Tag("tutee"))) {
-            person = new BillablePerson(name, phone, email, address, date, slot, tagList, contactList, remark, 0, 0.0);
-        } else {
-            person = new Person(name, phone, email, address, date, slot, tagList, contactList, remark);
-        }
+        person = new BillablePerson(name, phone, email, address, date, slot, tagList, contactList, remark, 0, 0.0);
 
         return new AddCommand(person);
     }

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -37,26 +38,45 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <FlowPane fx:id="tags" />
-        <FlowPane fx:id="contacts" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-        <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
-        <Label fx:id="slot" styleClass="cell_small_label" text="\$slot" />
+        <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
+            <VBox spacing="3" style="-fx-padding: 10;">
+                <Label text="Personal details:" style="-fx-font-weight: bold;" />
+                <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+                <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+                <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+            </VBox>
+        </AnchorPane>
+        <Region minHeight="5" />
+        <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
+            <VBox spacing="3" style="-fx-padding: 10;">
+                <Label text="Tuition details:" style="-fx-font-weight: bold;" />
+                <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
+                <Label fx:id="slot" styleClass="cell_small_label" text="\$slot" />
+            </VBox>
+        </AnchorPane>
         <Region minHeight="5" />
         <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
             <VBox spacing="3" style="-fx-padding: 10;">
                 <Label text="Billing details:" style="-fx-font-weight: bold;" />
                 <Label fx:id="unpaidHours" styleClass="cell_small_label" />
                 <Label fx:id="amountOwed" styleClass="cell_small_label" />
+                <Label fx:id="billingContact" styleClass="cell_small_label" />
             </VBox>
         </AnchorPane>
         <Region minHeight="5" />
         <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
-            <VBox spacing="3" style="-fx-padding: 10;">
-                <Label text="Remarks:" style="-fx-font-weight: bold;" />
-                <Label fx:id="remark" wrapText="true" />
-            </VBox>
+            <ScrollPane fitToWidth="true" prefViewportHeight="80"
+                        style="-fx-background-color: transparent; -fx-padding: 5;"
+                        AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                        AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+                <VBox spacing="3" style="-fx-padding: 10;">
+                    <Label text="Remarks:" style="-fx-font-weight: bold;" />
+                    <Label fx:id="remark"
+                           wrapText="true"
+                           maxWidth="Infinity"
+                           styleClass="cell_small_label" />
+                </VBox>
+            </ScrollPane>
         </AnchorPane>
     </VBox>
   </GridPane>

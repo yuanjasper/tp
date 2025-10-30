@@ -29,6 +29,7 @@ public class ModelManager implements Model {
     private final Schedule schedule;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final SortedList<Person> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,6 +44,7 @@ public class ModelManager implements Model {
         this.schedule = new Schedule(schedule);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        sortedPersons = new SortedList<>(filteredPersons);
     }
 
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
@@ -189,7 +191,7 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+        return sortedPersons;
     }
 
     @Override
@@ -202,14 +204,8 @@ public class ModelManager implements Model {
     public void sortListByDate(Comparator<Person> comparator) {
         requireNonNull(comparator);
 
-        SortedList<Person> sortedList = new SortedList<>(filteredPersons);
-
-        // Apply the provided comparator
-        sortedList.setComparator(comparator);
-
-        // Replace the current filtered list with the sorted one
-        // (since FilteredList is used for UI binding, you can clear and add all)
-        filteredPersons.setAll(sortedList);
+        // Apply the provided comparator on our sorted list
+        sortedPersons.setComparator(comparator);
     }
 
     @Override

@@ -11,9 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Person;
-import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
-import seedu.address.model.person.Person;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -51,7 +49,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private FlowPane contacts;
+    private Label billingContact;
     @FXML
     private Label remark;
     @FXML
@@ -79,9 +77,16 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        person.getContacts().stream()
-                .sorted(Comparator.comparing(contactname -> contactname.contact))
-                .forEach(contactname -> contacts.getChildren().add(new Label(contactname.contact)));
+        if (!person.getContacts().isEmpty()) {
+            String contactsText = person.getContacts().stream()
+                    .sorted(Comparator.comparing(contact -> contact.contact))
+                    .map(contact -> contact.contact)
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("-");
+            billingContact.setText(contactsText);
+        } else {
+            billingContact.setText(person.getPhone().value);
+        }
 
         String imagePath = person.getImagePath();
         Image img = new Image(getClass().getResourceAsStream(imagePath));
