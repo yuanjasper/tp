@@ -7,7 +7,7 @@ import java.util.Arrays;
 import seedu.address.logic.commands.GetAddressCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameIsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new GetEmail object
@@ -31,7 +31,7 @@ public class GetAddressCommandParser implements Parser<GetAddressCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new GetAddressCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new GetAddressCommand(new NameIsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
