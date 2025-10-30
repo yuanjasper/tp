@@ -26,39 +26,11 @@ public class ScheduleWindow extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(ScheduleWindow.class);
     private ReadOnlySchedule schedule;
 
-    @FXML
-    private TableView<Activity> scheduleTable;
-
-    @FXML
-    private TableColumn<Activity, String> dayColumn;
-
-    @FXML
-    private TableColumn<Activity, String> timeslotColumn;
-
-    @FXML
-    private TableColumn<Activity, String> infoColumn;
-
-    /**
-     * Creates a {@code ScheduleWindow} with the given {@code ReadOnlySchedule}.
-     */
-    public ScheduleWindow(ReadOnlySchedule schedule) {
-        super(FXML);
-        this.schedule = schedule;
-        populateTable();
-    }
-
-    /**
-     * Pass the user's schedule to this controller.
-     */
-    public void setSchedule() {
-        populateTable();
-    }
-
     /**
      * Used to determine order when presenting information on Schedule page
      * Sorts by date as priority followed by the slot
      */
-    Comparator<Activity> byDateThenSlot = (a1, a2) -> {
+    private final Comparator<Activity> byDateThenSlot = (a1, a2) -> {
         Day d1 = a1.getDay();
         Day d2 = a2.getDay();
         Timeslot s1 = a1.getTimeslot();
@@ -82,6 +54,30 @@ public class ScheduleWindow extends UiPart<Region> {
     };
 
     @FXML
+    private TableView<Activity> scheduleTable;
+
+    @FXML
+    private TableColumn<Activity, String> dayColumn;
+
+    @FXML
+    private TableColumn<Activity, String> timeslotColumn;
+
+    @FXML
+    private TableColumn<Activity, String> infoColumn;
+
+    /**
+     * Creates a {@code ScheduleWindow} with the given {@code ReadOnlySchedule}.
+     */
+    public ScheduleWindow(ReadOnlySchedule schedule) {
+        super(FXML);
+        this.schedule = schedule;
+        populateTable();
+    }
+
+    /**
+     * Initialises the table to be filled with data
+     */
+    @FXML
     public void initialize() {
         dayColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDay().toString()));
@@ -101,7 +97,7 @@ public class ScheduleWindow extends UiPart<Region> {
 
     /**
      * Populate the TableView with activities from the schedule.
-     * Items are presented in chronological order, date prioority followed by timeslot
+     * Items are presented in chronological order, date priority followed by timeslot
      */
     private void populateTable() {
         if (schedule != null) {

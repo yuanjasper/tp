@@ -94,7 +94,8 @@ public class PersonTest {
 
     @Test
     public void toStringMethod() {
-        String expected = BillablePerson.class.getCanonicalName() + "{name=" + AMY.getName() + ", phone=" + AMY.getPhone()
+        String expected = BillablePerson.class.getCanonicalName()
+                + "{name=" + AMY.getName() + ", phone=" + AMY.getPhone()
                 + ", email=" + AMY.getEmail() + ", address=" + AMY.getAddress() + ", date=" + AMY.getDate()
                 + ", slot=" + AMY.getSlot() + ", tags=" + AMY.getTags() + ", contacts=" + AMY.getContacts()
                 + ", remark=" + AMY.getRemark() + "}" + "{unpaidHours=" + AMY.getUnpaidHours()

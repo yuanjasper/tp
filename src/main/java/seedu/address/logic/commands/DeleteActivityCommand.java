@@ -27,7 +27,7 @@ public class DeleteActivityCommand extends Command {
             + PREFIX_SLOT + "START_TIME-END_TIME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "friday "
-            + PREFIX_SLOT + "0900-1000";
+            + PREFIX_SLOT + "09:00-10:00";
 
     public static final String MESSAGE_DELETE_ACTIVITY_SUCCESS = "Deleted Activity: %1$s";
     public static final String MESSAGE_ACTIVITY_NOT_FOUND = "Activity not found";

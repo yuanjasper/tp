@@ -170,7 +170,9 @@ public class PersonBuilder {
         this.amountOwed = amountOwed;
         return this;
     }
-
+    /**
+     * Creates a new BillablePerson with the specified inputs
+     */
     public BillablePerson build() {
         return new BillablePerson(name, phone, email, address, date, slot, tags, contacts, remark,
                 unpaidHours, amountOwed);
