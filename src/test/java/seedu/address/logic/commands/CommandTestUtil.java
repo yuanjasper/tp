@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -67,6 +68,27 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+
+    public static final String VALID_INFO_CS2106_LECTURE = "CS2106 Lecture";
+    public static final String VALID_INFO_CS2106_TUTORIAL = "CS2106 Tutorial";
+    public static final String VALID_INFO_MISMATCHED_TIME_ACTIVITY = "Mismatched Time Activity";
+    public static final String VALID_INFO_OVERLAPPING_ACTIVITY = "Overlapping Activity";
+    public static final String VALID_DAY_CS2106_LECTURE = "wednesday";
+    public static final String VALID_DAY_CS2106_TUTORIAL = "tuesday";
+    public static final String VALID_DAY_MISMATCHED_TIME_ACTIVITY = "sunday";
+    public static final String VALID_DAY_OVERLAPPING_ACTIVITY = "friday";
+    public static final String VALID_TIMESLOT_CS2106_LECTURE = "12:00-14:00";
+    public static final String VALID_TIMESLOT_CS2106_TUTORIAL = "10:00-11:00";
+    public static final String VALID_TIMESLOT_MISMATCHED_TIME_ACTIVITY = "13:00-12:00";
+    public static final String VALID_TIMESLOT_OVERLAPPING_ACTIVITY = "09:30-10:30";
+
+    public static final String INFO_DESC_CS2106_LECTURE = " " + PREFIX_INFO + VALID_INFO_CS2106_LECTURE;
+    public static final String DAY_DESC_CS2106_LECTURE = " " + PREFIX_DATE + VALID_DAY_CS2106_LECTURE;
+    public static final String TIMESLOT_DESC_CS2106_LECTURE = " " + PREFIX_SLOT + VALID_TIMESLOT_CS2106_LECTURE;
+
+    public static final String INVALID_INFO_DESC = " " + PREFIX_INFO;
+    public static final String INVALID_DAY_DESC = " " + PREFIX_DATE + "mon";
+    public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_SLOT + "0900-1000";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

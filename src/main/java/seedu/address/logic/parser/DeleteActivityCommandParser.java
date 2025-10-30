@@ -8,7 +8,9 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.DeleteActivityCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.schedule.activity.Activity;
 import seedu.address.model.schedule.activity.Day;
+import seedu.address.model.schedule.activity.Info;
 import seedu.address.model.schedule.activity.Timeslot;
 
 /**
@@ -36,7 +38,8 @@ public class DeleteActivityCommandParser implements Parser<DeleteActivityCommand
         Day day = ParserUtil.parseDay(argumentMultimap.getValue(PREFIX_DATE).get());
         Timeslot timeslot = ParserUtil.parseTimeslot(argumentMultimap.getValue(PREFIX_SLOT).get());
 
-        return new DeleteActivityCommand(day, timeslot);
+        Activity activity = new Activity(new Info("to delete"), day, timeslot);
+        return new DeleteActivityCommand(activity);
     }
 
     /**

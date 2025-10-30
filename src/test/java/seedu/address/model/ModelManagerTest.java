@@ -5,17 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalActivities.CS2103_LECTURE;
+import static seedu.address.testutil.TypicalActivities.CS2103_TUTORIAL;
+import static seedu.address.testutil.TypicalActivities.MISMATCHED_TIME_ACTIVITY;
+import static seedu.address.testutil.TypicalActivities.OVERLAPPING_ACTIVITY;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.activity.Activity;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -27,6 +34,7 @@ public class ModelManagerTest {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
         assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
+        assertEquals(new Schedule(), new Schedule(modelManager.getSchedule()));
     }
 
     @Test
@@ -38,6 +46,7 @@ public class ModelManagerTest {
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setScheduleFilePath(Paths.get("schedule/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
@@ -45,6 +54,7 @@ public class ModelManagerTest {
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
         userPrefs.setAddressBookFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setScheduleFilePath(Paths.get("new/schedule/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -86,6 +96,85 @@ public class ModelManagerTest {
     public void hasPerson_personInAddressBook_returnsTrue() {
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
+    }
+
+    @Test
+    public void setSchedule_nullSchedule_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setSchedule(null));
+    }
+
+    @Test
+    public void setSchedule_validPath_setScheduleFilePath() {
+        Path path = Paths.get("schedule/file/path");
+        modelManager.setScheduleFilePath(path);
+        assertEquals(path, modelManager.getScheduleFilePath());
+    }
+
+    @Test
+    public void hasActivity_nullActivity_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasActivity(null));
+    }
+
+    @Test
+    public void hasActivity_activityNotInSchedule_returnsFalse() {
+        assertFalse(modelManager.hasActivity(CS2103_TUTORIAL));
+    }
+
+    @Test
+    public void hasActivity_activityInSchedule_returnsTrue() {
+        modelManager.addActivity(CS2103_TUTORIAL);
+        assertTrue(modelManager.hasActivity(CS2103_TUTORIAL));
+    }
+
+    @Test
+    public void hasMismatchedTime_nullActivity_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasMismatchedTime(null));
+    }
+
+    @Test
+    public void hasMismatchedTime_timingNotMismatched_returnsFalse() {
+        assertFalse(modelManager.hasMismatchedTime(CS2103_TUTORIAL));
+    }
+
+    @Test
+    public void hasMismatchedTime_timingMismatched_returnsTrue() {
+        assertTrue(modelManager.hasMismatchedTime(MISMATCHED_TIME_ACTIVITY));
+    }
+
+    @Test
+    public void hasOverlap_nullActivity_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasOverlap(null));
+    }
+
+    @Test
+    public void hasOverlap_noOverlapBetweenActivities_returnsFalse() {
+        modelManager.addActivity(CS2103_TUTORIAL);
+        assertFalse(modelManager.hasOverlap(CS2103_LECTURE));
+    }
+
+    @Test
+    public void hasOverlap_overlapBetweenActivities_returnsTrue() {
+        modelManager.addActivity(CS2103_TUTORIAL);
+        assertTrue(modelManager.hasOverlap(OVERLAPPING_ACTIVITY));
+    }
+
+    @Test
+    public void getSameDateTimeActivity_nullActivity_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.getSameDateTimeActivity(null));
+    }
+
+    @Test
+    public void getSameDateTimeActivity_activityNotInSchedule_returnsOptionalEmpty() {
+        modelManager.addActivity(CS2103_TUTORIAL);
+        Optional<Activity> activity = modelManager.getSameDateTimeActivity(CS2103_LECTURE);
+        assertEquals(activity, Optional.empty());
+    }
+
+    @Test
+    public void getSameDateTimeActivity_activityInSchedule_returnsOptionalActivity() {
+        modelManager.addActivity(CS2103_TUTORIAL);
+        Optional<Activity> activity = modelManager.getSameDateTimeActivity(CS2103_TUTORIAL);
+        assertEquals(activity, Optional.of(CS2103_TUTORIAL));
     }
 
     @Test

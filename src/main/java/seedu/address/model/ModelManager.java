@@ -49,6 +49,10 @@ public class ModelManager implements Model {
         this(addressBook, new Schedule(), userPrefs);
     }
 
+    public ModelManager(ReadOnlySchedule schedule, ReadOnlyUserPrefs userPrefs) {
+        this(new AddressBook(), schedule, userPrefs);
+    }
+
     public ModelManager() {
         this(new AddressBook(), new Schedule(), new UserPrefs());
     }
