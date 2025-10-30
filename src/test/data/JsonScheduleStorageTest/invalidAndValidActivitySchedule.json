@@ -1,0 +1,13 @@
+{
+  "activities": [ {
+    "type": "activity",
+    "info": "valid activity",
+    "day": "wednesday",
+    "timeslot": "15:00-17:00"
+  }, {
+    "type": "activity",
+    "info": "activity with invalid day",
+    "day": "wed",
+    "timeslot": "15:00-17:00"
+  } ]
+}

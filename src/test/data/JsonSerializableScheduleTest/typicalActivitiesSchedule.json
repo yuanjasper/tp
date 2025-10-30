@@ -1,0 +1,29 @@
+{
+  "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
+  "activities": [ {
+    "type": "activity",
+    "info": "CS2103 Tutorial",
+    "day": "Friday",
+    "timeslot": "09:00-10:00"
+  }, {
+    "type": "activity",
+    "info": "CS2103 Lecture",
+    "day": "Friday",
+    "timeslot": "16:00-18:00"
+  }, {
+    "type": "activity",
+    "info": "CS2103 Group Meeting",
+    "day": "Wednesday",
+    "timeslot": "17:00-18:00"
+  }, {
+    "type": "activity",
+    "info": "CCA_MEETING",
+    "day": "Wednesday",
+    "timeslot": "15:00-16:30"
+  }, {
+    "type": "activity",
+    "info": "Extra Lesson",
+    "day": "Sunday",
+    "timeslot": "14:00-16:00"
+  } ]
+}

@@ -1,0 +1,8 @@
+{
+  "activities": [ {
+    "type": "activity",
+    "info": "activity with invalid timeslot",
+    "day": "wednesday",
+    "timeslot": "15:00 - 17:00"
+  } ]
+}

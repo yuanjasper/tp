@@ -1,5 +1,7 @@
 package seedu.address.model.schedule.activity;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -21,6 +23,7 @@ public class Activity {
      * @param timeslot Timeslot of the activity.
      */
     public Activity(Info info, Day day, Timeslot timeslot) {
+        requireAllNonNull(info, day, timeslot);
         this.info = info;
         this.day = day;
         this.timeslot = timeslot;

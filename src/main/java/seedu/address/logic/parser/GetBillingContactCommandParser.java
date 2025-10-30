@@ -8,6 +8,7 @@ import seedu.address.logic.commands.GetBillingContactCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameIsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new GetBillingContactCommand object
@@ -31,7 +32,7 @@ public class GetBillingContactCommandParser implements Parser<GetBillingContactC
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new GetBillingContactCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new GetBillingContactCommand(new NameIsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

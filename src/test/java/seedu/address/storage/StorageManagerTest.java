@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static seedu.address.testutil.TypicalActivities.getTypicalSchedule;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.nio.file.Path;
@@ -14,6 +15,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.Schedule;
 
 public class StorageManagerTest {
 
@@ -66,4 +69,21 @@ public class StorageManagerTest {
         assertNotNull(storageManager.getAddressBookFilePath());
     }
 
+    @Test
+    public void scheduleReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link JsonScheduleStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link JsonScheduleStorageTest} class.
+         */
+        Schedule original = getTypicalSchedule();
+        storageManager.saveSchedule(original);
+        ReadOnlySchedule retrieved = storageManager.readSchedule().get();
+        assertEquals(original, new Schedule(retrieved));
+    }
+
+    @Test
+    public void getScheduleFilePath() {
+        assertNotNull(storageManager.getScheduleFilePath());
+    }
 }

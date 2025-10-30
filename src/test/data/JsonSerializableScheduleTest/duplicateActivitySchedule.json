@@ -1,0 +1,13 @@
+{
+  "activities": [ {
+    "type": "activity",
+    "info": "CS2103 Tutorial",
+    "day": "Friday",
+    "timeslot": "09:00-10:00"
+  }, {
+    "type": "activity",
+    "info": "CS2103 Tutorial",
+    "day": "Friday",
+    "timeslot": "09:00-10:00"
+  } ]
+}

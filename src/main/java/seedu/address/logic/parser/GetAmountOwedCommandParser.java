@@ -8,6 +8,7 @@ import seedu.address.logic.commands.GetAmountOwedCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameIsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new GetAmountOwed object
@@ -30,6 +31,6 @@ public class GetAmountOwedCommandParser implements Parser<GetAmountOwedCommand> 
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new GetAmountOwedCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new GetAmountOwedCommand(new NameIsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 }
