@@ -238,7 +238,7 @@ Format: `schedule`
 
 ### Add activity : `addactivity`
 
-Adds an activity to your schedule. 
+Adds an activity to your schedule.
 
 Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 

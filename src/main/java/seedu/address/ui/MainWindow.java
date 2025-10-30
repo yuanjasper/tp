@@ -14,6 +14,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -187,11 +189,11 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.isPersonList()) {
+            if (commandText.trim().equals(ListCommand.COMMAND_WORD)) {
                 handleShowPersonList();
             }
 
-            if (commandResult.isSchedule()) {
+            if (commandText.trim().equals(ScheduleCommand.COMMAND_WORD)) {
                 handleShowSchedule();
             }
 

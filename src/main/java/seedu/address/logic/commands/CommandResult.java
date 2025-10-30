@@ -19,22 +19,13 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
-    /** User switch to be on the page that displays list of people */
-    private final boolean personList;
-
-    /** User switch to be on the page that displays schedule */
-    private final boolean showSchedule;
-
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean personList,
-                         boolean showSchedule) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.personList = personList;
-        this.showSchedule = showSchedule;
     }
 
     /**
@@ -42,7 +33,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, false, false);
+        this(feedbackToUser, false, false);
     }
 
     public String getFeedbackToUser() {
@@ -55,14 +46,6 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
-    }
-
-    public boolean isPersonList() {
-        return personList;
-    }
-
-    public boolean isSchedule() {
-        return showSchedule;
     }
 
     @Override
@@ -79,14 +62,12 @@ public class CommandResult {
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
-                && personList == otherCommandResult.personList
-                && showSchedule == otherCommandResult.showSchedule
                 && exit == otherCommandResult.exit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit, personList, showSchedule);
+        return Objects.hash(feedbackToUser, showHelp, exit);
     }
 
     @Override
@@ -95,8 +76,6 @@ public class CommandResult {
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
-                .add("personList", personList)
-                .add("showSchedule", showSchedule)
                 .toString();
     }
 

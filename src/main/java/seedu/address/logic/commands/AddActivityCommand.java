@@ -26,7 +26,7 @@ public class AddActivityCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INFO + "lesson "
             + PREFIX_DATE + "friday "
-            + PREFIX_SLOT + "0900-1000";
+            + PREFIX_SLOT + "09:00-10:00";
 
     public static final String MESSAGE_ADD_ACTIVITY_SUCCESS = "Added activity: %1$s";
     public static final String MESSAGE_DUPLICATE_ACTIVITY = "Activity already exists in the schedule";
