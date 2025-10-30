@@ -61,7 +61,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_hasOverlap_throwsCommandException() {
-        Person personWithOverlappingTimeslot =  new PersonBuilder().withDate(VALID_DAY_OVERLAPPING_ACTIVITY)
+        Person personWithOverlappingTimeslot = new PersonBuilder().withDate(VALID_DAY_OVERLAPPING_ACTIVITY)
                 .withSlot(VALID_TIMESLOT_OVERLAPPING_ACTIVITY).build();
         assertCommandFailure(new AddCommand(personWithOverlappingTimeslot), model,
                 AddActivityCommand.MESSAGE_OVERLAP_TIMING);
