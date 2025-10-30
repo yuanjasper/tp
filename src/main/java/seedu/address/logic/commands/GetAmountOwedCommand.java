@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameIsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -19,11 +19,11 @@ public class GetAmountOwedCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Gets the amount owed of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Example: " + COMMAND_WORD + " alice wonderland";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final NameIsKeywordsPredicate predicate;
 
-    public GetAmountOwedCommand(NameContainsKeywordsPredicate predicate) { this.predicate = predicate;}
+    public GetAmountOwedCommand(NameIsKeywordsPredicate predicate) { this.predicate = predicate;}
 
     @Override
     public CommandResult execute(Model model) {
