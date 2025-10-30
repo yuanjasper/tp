@@ -25,8 +25,8 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_DATE = "Wednesday";
-    public static final String DEFAULT_SLOT = "16:00-18:00";
+    public static final String DEFAULT_DATE = "Sunday";
+    public static final String DEFAULT_SLOT = "18:00-20:00";
     public static final String DEFAULT_REMARK = "New tutee";
     public static final Integer DEFAULT_UNPAID_HOURS = 0;
     public static final Double DEFAULT_AMOUNT_OWED = 0.00;
