@@ -31,6 +31,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.activity.Tuition;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonScheduleStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -178,6 +179,7 @@ public class LogicManagerTest {
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
+        expectedModel.addActivity(new Tuition(expectedPerson));
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }

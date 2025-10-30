@@ -23,7 +23,8 @@ public class Messages {
     public static final String MESSAGE_MULTIPLE_ENTRIES = "There are multiple entries for search requirements";
     public static final String MESSAGE_INVALID_BILLABLE_PERSON = "This person is not a tutee! No bill records found";
     public static final String MESSAGE_INVALID_BILLING = "Tutee has no outstanding bills!";
-    public static final String MESSAGE_EXCESS_BILLING = "Amount collected exceeds outstanding bills! Check your input again.";
+    public static final String MESSAGE_EXCESS_BILLING = "Amount collected exceeds outstanding bills!"
+            + "Check your input again.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

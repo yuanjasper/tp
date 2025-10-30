@@ -67,8 +67,9 @@ public class EditHoursCommand extends Command {
                 throw new CommandException(MESSAGE_SAME_HOURS);
             } else {
                 updatedPerson = new BillablePerson(personToEdit.getName(), personToEdit.getPhone(),
-                        personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getDate(), personToEdit.getSlot(),
-                        personToEdit.getTags(), personToEdit.getContacts(), personToEdit.getRemark(), editedHours, 0);
+                        personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getDate(),
+                        personToEdit.getSlot(), personToEdit.getTags(), personToEdit.getContacts(),
+                        personToEdit.getRemark(), editedHours, 0);
                 model.setPerson(personToEdit, updatedPerson);
                 model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             }

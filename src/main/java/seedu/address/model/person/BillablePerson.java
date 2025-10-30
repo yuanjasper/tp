@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.BillingContact;
 import seedu.address.model.tag.Tag;
 
@@ -12,16 +13,17 @@ import seedu.address.model.tag.Tag;
  */
 public class BillablePerson extends Person {
 
-    private static final double RATE_PER_HOUR = 70;
+    public static final double RATE_PER_HOUR = 70;
 
-    private int unpaidHours;
-    private double amountOwed;
+    public final int unpaidHours;
+    public final double amountOwed;
 
     /**
      * Creates a BillablePerson with all fields specified.
      */
-    public BillablePerson(Name name, Phone phone, Email email, Address address, TuitionDate date, TuitionSlot slot, Set<Tag> tags,
-                          Set<BillingContact> contacts, Remark remark, int unpaidHours, double amountOwed) {
+    public BillablePerson(Name name, Phone phone, Email email, Address address, TuitionDate date, TuitionSlot slot,
+                          Set<Tag> tags, Set<BillingContact> contacts, Remark remark,
+                          int unpaidHours, double amountOwed) {
         super(name, phone, email, address, date, slot, tags, contacts, remark);
         this.unpaidHours = unpaidHours;
         this.amountOwed = unpaidHours * RATE_PER_HOUR;
@@ -61,10 +63,10 @@ public class BillablePerson extends Person {
 
     @Override
     public String toString() {
-        return new StringBuilder(super.toString())
-                .append("; Unpaid Hours: ").append(unpaidHours)
-                .append("; Rate per hour: $").append(String.format("%.2f", RATE_PER_HOUR))
-                .append("; Amount owed: $").append(String.format("%.2f", getAmountOwed()))
+        return new ToStringBuilder(super.toString())
+                .add("unpaidHours", unpaidHours)
+                .add("ratePerHour", String.format("$%.2f", RATE_PER_HOUR))
+                .add("amountOwed", String.format("$%.2f", amountOwed))
                 .toString();
     }
 }

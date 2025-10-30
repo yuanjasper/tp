@@ -23,7 +23,9 @@ public class GetAmountOwedCommand extends Command {
 
     private final NameIsKeywordsPredicate predicate;
 
-    public GetAmountOwedCommand(NameIsKeywordsPredicate predicate) { this.predicate = predicate;}
+    public GetAmountOwedCommand(NameIsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
 
     @Override
     public CommandResult execute(Model model) {

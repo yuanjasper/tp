@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalActivities.CS2103_LECTURE;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.schedule.activity.Day;
 import seedu.address.model.schedule.activity.Info;
 import seedu.address.model.schedule.activity.Timeslot;
@@ -33,55 +34,55 @@ public class JsonAdaptedActivityTest {
     public void toModelType_nullInfo_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(VALID_TYPE, null, VALID_DAY, VALID_TIMESLOT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Info.class.getSimpleName());
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_invalidInfo_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(VALID_TYPE, INVALID_INFO, VALID_DAY, VALID_TIMESLOT);
         String expectedMessage = Info.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_nullDay_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(VALID_TYPE, VALID_INFO, null, VALID_TIMESLOT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Day.class.getSimpleName());
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_invalidDay_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(VALID_TYPE, VALID_INFO, INVALID_DAY, VALID_TIMESLOT);
         String expectedMessage = Day.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_nullTimeslot_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(VALID_TYPE, VALID_INFO, VALID_DAY, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Timeslot.class.getSimpleName());
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_invalidTimeslot_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(VALID_TYPE, VALID_INFO, VALID_DAY, INVALID_TIMESLOT);
         String expectedMessage = Timeslot.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_nullType_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(null, VALID_INFO, VALID_DAY, VALID_TIMESLOT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "Type");
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 
     @Test
     public void toModelType_invalidType_throwsIllegalValueException() {
         JsonAdaptedActivity activity = new JsonAdaptedActivity(INVALID_TYPE, VALID_INFO, VALID_DAY, VALID_TIMESLOT);
         String expectedMessage = TYPE_INCORRECT_FORMAT;
-        assertThrows(IllegalArgumentException.class, expectedMessage, activity::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, activity::toModelType);
     }
 }

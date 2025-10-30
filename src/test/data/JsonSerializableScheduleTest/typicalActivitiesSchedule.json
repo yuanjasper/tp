@@ -17,7 +17,7 @@
     "timeslot": "17:00-18:00"
   }, {
     "type": "activity",
-    "info": "CCA_MEETING",
+    "info": "CCA Meeting",
     "day": "Wednesday",
     "timeslot": "15:00-16:30"
   }, {
@@ -25,5 +25,40 @@
     "info": "Extra Lesson",
     "day": "Sunday",
     "timeslot": "14:00-16:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for Alice Pauline",
+    "day": "Monday",
+    "timeslot": "09:00-11:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for Benson Meier",
+    "day": "Wednesday",
+    "timeslot": "19:00-21:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for Carl Kurz",
+    "day": "Tuesday",
+    "timeslot": "16:00-18:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for Daniel Meier",
+    "day": "Tuesday",
+    "timeslot": "19:00-21:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for Elle Meyer",
+    "day": "Thursday",
+    "timeslot": "16:00-18:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for Fiona Kunz",
+    "day": "Thursday",
+    "timeslot": "19:00-21:00"
+  }, {
+    "type": "tuition",
+    "info": "Tuition for George Best",
+    "day": "Saturday",
+    "timeslot": "17:00-19:00"
   } ]
 }
