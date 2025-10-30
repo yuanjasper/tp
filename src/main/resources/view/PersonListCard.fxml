@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ScrollPane?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <VBox alignment="CENTER" prefWidth="80" prefHeight="105" spacing="10">
         <ImageView fx:id="displayPicture"
@@ -53,10 +54,18 @@
         </AnchorPane>
         <Region minHeight="5" />
         <AnchorPane style="-fx-border-color: #bcbcbc; -fx-border-radius: 8;">
-            <VBox spacing="3" style="-fx-padding: 10;">
-                <Label text="Remarks:" style="-fx-font-weight: bold;" />
-                <Label fx:id="remark" wrapText="true" />
-            </VBox>
+            <ScrollPane fitToWidth="true" prefViewportHeight="80"
+                        style="-fx-background-color: transparent; -fx-padding: 5;"
+                        AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                        AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+                <VBox spacing="3" style="-fx-padding: 10;">
+                    <Label text="Remarks:" style="-fx-font-weight: bold;" />
+                    <Label fx:id="remark"
+                           wrapText="true"
+                           maxWidth="Infinity"
+                           styleClass="cell_small_label" />
+                </VBox>
+            </ScrollPane>
         </AnchorPane>
     </VBox>
   </GridPane>
