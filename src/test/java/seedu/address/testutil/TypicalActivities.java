@@ -12,13 +12,16 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2106
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2106_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MISMATCHED_TIME_ACTIVITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_OVERLAPPING_ACTIVITY;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.activity.Activity;
+import seedu.address.model.schedule.activity.Tuition;
 
 /**
  * A utility class containing a list of {@code Activity} objects to be used in tests.
@@ -63,6 +66,9 @@ public class TypicalActivities {
         Schedule schedule = new Schedule();
         for (Activity activity : getTypicalActivities()) {
             schedule.add(activity);
+        }
+        for (Person person : getTypicalPersons()) {
+            schedule.add(new Tuition(person));
         }
         return schedule;
     }

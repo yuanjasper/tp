@@ -1,15 +1,14 @@
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -39,6 +38,9 @@ public class ScheduleWindow extends UiPart<Region> {
     @FXML
     private TableColumn<Activity, String> infoColumn;
 
+    /**
+     * Creates a {@code ScheduleWindow} with the given {@code ReadOnlySchedule}.
+     */
     public ScheduleWindow(ReadOnlySchedule schedule) {
         super(FXML);
         this.schedule = schedule;
@@ -56,7 +58,7 @@ public class ScheduleWindow extends UiPart<Region> {
      * Used to determine order when presenting information on Schedule page
      * Sorts by date as priority followed by the slot
      */
-    Comparator<Activity> BY_DATE_THEN_SLOT = (a1, a2) -> {
+    Comparator<Activity> byDateThenSlot = (a1, a2) -> {
         Day d1 = a1.getDay();
         Day d2 = a2.getDay();
         Timeslot s1 = a1.getTimeslot();
@@ -104,7 +106,7 @@ public class ScheduleWindow extends UiPart<Region> {
     private void populateTable() {
         if (schedule != null) {
             SortedList<Activity> sortedActivities = new SortedList<>(schedule.getActivities());
-            sortedActivities.setComparator(BY_DATE_THEN_SLOT);
+            sortedActivities.setComparator(byDateThenSlot);
 
             scheduleTable.setItems(sortedActivities);
         }

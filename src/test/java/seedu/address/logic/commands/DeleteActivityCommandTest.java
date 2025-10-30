@@ -56,6 +56,7 @@ public class DeleteActivityCommandTest {
     public void execute_activityIsTuition_throwsCommandException() {
         Activity activityToDelete = new Tuition(toDelete,
                 VOLUNTEERING.getDay(), VOLUNTEERING.getTimeslot());
+        model.addActivity(activityToDelete);
         DeleteActivityCommand deleteActivityCommand = new DeleteActivityCommand(activityToDelete);
 
         assertCommandFailure(deleteActivityCommand, model, DeleteActivityCommand.MESSAGE_ACTIVITY_IS_TUITION);

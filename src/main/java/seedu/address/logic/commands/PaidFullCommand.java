@@ -13,15 +13,16 @@ import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Person;
 
 /**
- * Sets the number of unpaid hours and amount owed to 0 of a selected person using it's displayed index from the address book.
+ * Sets the number of unpaid hours and amount owed to 0 of a selected person using
+ * it's displayed index from the address book.
  */
-public class PaidFullCommand extends Command{
+public class PaidFullCommand extends Command {
 
     public static final String COMMAND_WORD = "paidfull";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sets the number of unpaid hours and amount owed to 0 of the person identified " +
-            "by the index number used in the displayed person list.\n"
+            + ": Sets the number of unpaid hours and amount owed to 0 of the person identified "
+            + "by the index number used in the displayed person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 

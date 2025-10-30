@@ -22,13 +22,14 @@ public class CommandResult {
     /** User switch to be on the page that displays list of people */
     private final boolean personList;
 
-    /**User switch to be on the page that displays schedule */
+    /** User switch to be on the page that displays schedule */
     private final boolean showSchedule;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean personList, boolean showSchedule) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean personList,
+                         boolean showSchedule) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
@@ -85,7 +86,7 @@ public class CommandResult {
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, showHelp, exit, personList, showSchedule);
     }
 
     @Override

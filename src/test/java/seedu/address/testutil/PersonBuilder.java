@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BillablePerson;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -27,6 +28,8 @@ public class PersonBuilder {
     public static final String DEFAULT_DATE = "Wednesday";
     public static final String DEFAULT_SLOT = "16:00-18:00";
     public static final String DEFAULT_REMARK = "New tutee";
+    public static final Integer DEFAULT_UNPAID_HOURS = 0;
+    public static final Double DEFAULT_AMOUNT_OWED = 0.00;
 
     private Name name;
     private Phone phone;
@@ -37,6 +40,8 @@ public class PersonBuilder {
     private Set<Tag> tags;
     private Set<BillingContact> contacts;
     private Remark remark;
+    private Integer unpaidHours;
+    private Double amountOwed;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -51,7 +56,8 @@ public class PersonBuilder {
         tags = new HashSet<>();
         contacts = new HashSet<>();
         remark = new Remark(DEFAULT_REMARK);
-
+        unpaidHours = DEFAULT_UNPAID_HOURS;
+        amountOwed = DEFAULT_AMOUNT_OWED;
     }
 
     /**
@@ -67,10 +73,17 @@ public class PersonBuilder {
         tags = new HashSet<>(personToCopy.getTags());
         contacts = new HashSet<>(personToCopy.getContacts());
         remark = personToCopy.getRemark();
+        if (personToCopy instanceof BillablePerson) {
+            unpaidHours = ((BillablePerson) personToCopy).getUnpaidHours();
+            amountOwed = ((BillablePerson) personToCopy).getAmountOwed();
+        } else {
+            unpaidHours = DEFAULT_UNPAID_HOURS;
+            amountOwed = DEFAULT_AMOUNT_OWED;
+        }
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withName(String name) {
         this.name = new Name(name);
@@ -78,7 +91,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
@@ -87,7 +100,7 @@ public class PersonBuilder {
 
     /**
      * Parses the {@code contacts} into a {@code Set<BillingContacts>}
-     * and set it to the {@code Person} that we are building.
+     * and set it to the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withContacts(String ... contacts) {
         this.contacts = SampleDataUtil.getContactSet(contacts);
@@ -95,7 +108,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Sets the {@code Address} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withAddress(String address) {
         this.address = new Address(address);
@@ -103,7 +116,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Phone} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
         this.phone = new Phone(phone);
@@ -111,7 +124,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Email} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withEmail(String email) {
         this.email = new Email(email);
@@ -119,7 +132,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code TuitionDate} of the {@code Person} that we are building.
+     * Sets the {@code TuitionDate} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withDate(String date) {
         this.date = new TuitionDate(date);
@@ -127,7 +140,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code TuitionSlot} of the {@code Person} that we are building.
+     * Sets the {@code TuitionSlot} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withSlot(String slot) {
         this.slot = new TuitionSlot(slot);
@@ -135,15 +148,32 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Remark} of the {@code Person} that we are building.
+     * Sets the {@code Remark} of the {@code BillablePerson} that we are building.
      */
     public PersonBuilder withRemark(String remark) {
         this.remark = new Remark(remark);
         return this;
     }
 
-    public Person build() {
-        return new Person(name, phone, email, address, date, slot, tags, contacts, remark);
+    /**
+     * Sets the {@code unpaidHours} of the {@code BillablePerson} that we are building.
+     */
+    public PersonBuilder withUnpaidHours(Integer unpaidHours) {
+        this.unpaidHours = unpaidHours;
+        return this;
+    }
+
+    /**
+     * Sets the {@code amountOwed} of the {@code BillablePerson} that we are building.
+     */
+    public PersonBuilder withAmountOwed(Double amountOwed) {
+        this.amountOwed = amountOwed;
+        return this;
+    }
+
+    public BillablePerson build() {
+        return new BillablePerson(name, phone, email, address, date, slot, tags, contacts, remark,
+                unpaidHours, amountOwed);
     }
 
 }

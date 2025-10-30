@@ -31,7 +31,7 @@ public class SortCommandTest {
     public void execute_nonEmptyList_success() {
         SortCommand sortCommand = new SortCommand();
 
-        expectedModel.updateFilteredPersonList(Model.IS_TUTEE);
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         expectedModel.sortListByDate(Model.BY_DATE_THEN_SLOT);
 
         String expectedMessage = SortCommand.MESSAGE_SUCCESS;

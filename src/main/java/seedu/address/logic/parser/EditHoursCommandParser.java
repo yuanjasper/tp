@@ -31,7 +31,7 @@ public class EditHoursCommandParser implements Parser<EditHoursCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHoursCommand.MESSAGE_USAGE), pe);
         }
 
-        if (!arePrefixesPresent(argMultimap,PREFIX_HOURS)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_HOURS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHoursCommand.MESSAGE_USAGE));
         }
 

@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.model.person.BillablePerson.RATE_PER_HOUR;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -93,10 +94,12 @@ public class PersonTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Person.class.getCanonicalName() + "{name=" + AMY.getName() + ", phone=" + AMY.getPhone()
+        String expected = BillablePerson.class.getCanonicalName() + "{name=" + AMY.getName() + ", phone=" + AMY.getPhone()
                 + ", email=" + AMY.getEmail() + ", address=" + AMY.getAddress() + ", date=" + AMY.getDate()
                 + ", slot=" + AMY.getSlot() + ", tags=" + AMY.getTags() + ", contacts=" + AMY.getContacts()
-                + ", remark=" + AMY.getRemark() + "}";
+                + ", remark=" + AMY.getRemark() + "}" + "{unpaidHours=" + AMY.getUnpaidHours()
+                + ", ratePerHour=" + String.format("$%.2f", RATE_PER_HOUR)
+                + ", amountOwed=" + String.format("$%.2f", AMY.getAmountOwed()) + "}";
         assertEquals(expected, AMY.toString());
     }
 }
