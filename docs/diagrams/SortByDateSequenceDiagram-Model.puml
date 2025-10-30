@@ -23,4 +23,5 @@ activate Model
 Model -> Model : setComparator(BY_DATE_THEN_SLOT)
 [<-- Model
 deactivate Model
+
 @enduml

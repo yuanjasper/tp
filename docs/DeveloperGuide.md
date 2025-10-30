@@ -158,7 +158,7 @@ Given below shows the sequence diagram of how the sortbydate command goes throug
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `SortCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
-The calls to Model class shown above are shown in detail in the sequence diagram below. 
+The calls to Model class shown above are shown in detail in the sequence diagram below.
 
 ![SortSequenceDiagram](images/SortByDateSequenceDiagram-Model.png)
 
@@ -271,8 +271,8 @@ _{more aspects and alternatives to be added}_
 **Value proposition**:
 * Managing Tutee contacts
 * Managing timing conflicts: Tuition classes / Study schedule
-  * Note that we do not support activities that span across midnight. 
-* Tracking of billing status 
+  * Note that we do not support activities that span across midnight.
+* Tracking of billing status
 * Tracking of Tutee’s learning topic status (via Remarks)
 
 
@@ -315,7 +315,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User does not enter all compulsory details.
   * 1a1. TuitionSync shows an error message.
-  
+
     Use case resumes at step 1.
 
 * 1b. User enters details with incorrect format.
@@ -480,19 +480,19 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `schedule` <br> Expected: Tutee list will be gone and instead a schedule view will be shown. Success message shown on status message.
    2.    Test case: `schedule hh` <br> Nothing done. Error details shown in the status message.
 
-### Adding an Activity 
+### Adding an Activity
 1. Adds an activity with the parameters of information (about the activity), date, and time.
-   1. Test case: `addactivity i/CCA d/wednesday s/15:00-16:00` <br> Expected: Activity added to the schedule in chronological order. Details of the added activity will be shown in the status message. 
+   1. Test case: `addactivity i/CCA d/wednesday s/15:00-16:00` <br> Expected: Activity added to the schedule in chronological order. Details of the added activity will be shown in the status message.
    2. Test case: `addactivity d/tuesday s/12:00-13:00` <br> Expected: No activity added. Error details shown in the status message.
    3. Other incorrect test cases: `addactivity i/CCA s/12:00-13:00`, `addactivity i/ Class d/tuesday s/9:00-13:00` <br> Expected: Similar to previous.
 
-### Deleting an Activity 
-1. Deletes an activity specified by the time and time of the activity. 
+### Deleting an Activity
+1. Deletes an activity specified by the time and time of the activity.
    1. Prerequisites: Activity slot needs to be exact and reflect an activity slot in the current schedule.
    2. Prerequisites: Activity deleted cannot be a tuition slot, that was added via `add command` in address book.
    2. Test case: `deleteactivity d/thursday s/18:00-20:00` <br> Expected: Deletes an activity. Deleted activity details will be shown on status message.
 
-### Editing unpaid hours 
+### Editing unpaid hours
 1. Editing the unpaid hours of a tutee while all tutees are being shown
    1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list.
    2. Test case: `edithours 1 h/7` <br> Expected: First contact in the list will now have 7 unpaid hours reflected.
@@ -501,22 +501,22 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `edithours 1 h/-1` <br> Expected: No hours edited. Error details shown in the status message.
 
 
-### Indicating that a tutee has paid in full 
-1. Indicating that a tutee has paid his/her amount owed in full. 
-    1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list. 
+### Indicating that a tutee has paid in full
+1. Indicating that a tutee has paid his/her amount owed in full.
+    1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list.
    2. Test case: `paidfull 3` <br> Expected: First contact in the list will now have 0 unpaid hours and $0.00 amount owed.
       Details of the edited contact shown in the status message.
    3. Other test cases: Refer to "Deleting a person" above
- 
 
-### Getting the address of a tutee 
-1. Getting the address of a tutee using his/her name. 
+
+### Getting the address of a tutee
+1. Getting the address of a tutee using his/her name.
     1. Prerequisites: List all tutees using the `list` command. Multiple tutees in the list.
    2. Test case: `getaddress David Li` <br> Expected: Retrieves the email of David Li, if such a person exists in the address book. Address will be shown in the status message, allowing users to copy it.
    3. Test case: `getaddress Doe` <br> Expected: If there are 2 persons with the surname Doe in the address book, then no address will be returned. Error message shown in the status message.
 
 ### Sorting by date
-1. Sorting tutees based on their tuition date first then slot timing. 
-   1. Test case: `sortbydate` <br> Expected: All tutees will be sorted and shown. Success message shown in status message. 
+1. Sorting tutees based on their tuition date first then slot timing.
+   1. Test case: `sortbydate` <br> Expected: All tutees will be sorted and shown. Success message shown in status message.
    2. Test case: `sortbydate hh` <br> Nothing done. Error details shown in the status message.
 
