@@ -33,6 +33,7 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_DATE + "DATE "
             + PREFIX_SLOT + "SLOT "
+            + "[" + PREFIX_REMARK + "REMARK]"
             + "[" + PREFIX_TAG + "TAG]..."
             + "[" + PREFIX_CONTACT + "BILLING CONTACT]...\n"
             + "Example: " + COMMAND_WORD + " "
@@ -43,8 +44,8 @@ public class AddCommand extends Command {
             + PREFIX_DATE + "wednesday "
             + PREFIX_SLOT + "16:00-18:00 "
             + PREFIX_TAG + "tutee "
-            + PREFIX_CONTACT + "83451235 "
-            + PREFIX_REMARK + "Exams coming up!";
+            + PREFIX_CONTACT + "83451235"
+            + PREFIX_REMARK + "Exams coming soon.";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

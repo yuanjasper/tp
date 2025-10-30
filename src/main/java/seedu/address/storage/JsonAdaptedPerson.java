@@ -176,21 +176,12 @@ class JsonAdaptedPerson {
         final Set<BillingContact> modelContacts = new HashSet<>(personContacts);
         final Remark modelRemark = new Remark(remark == null ? "NIL" : remark);
 
-        // Construct BillablePerson if tagged as tutee
-        boolean isTutee = modelTags.stream()
-                .anyMatch(tag -> tag.tagName.equalsIgnoreCase("tutee"));
 
-        if (isTutee) {
-            int modelUnpaidHours = unpaidHours == null ? 0 : unpaidHours;
-            double modelAmountOwed = amountOwed == null ? 0.0 : amountOwed;
-            return new BillablePerson(modelName, modelPhone, modelEmail, modelAddress,
-                    modelDate, modelSlot, modelTags, modelContacts, modelRemark,
-                    modelUnpaidHours, modelAmountOwed);
-        }
-
-        //Otherwise, return normal person
-        return new Person(modelName, modelPhone, modelEmail, modelAddress,
-                modelDate, modelSlot, modelTags, modelContacts, modelRemark);
+        int modelUnpaidHours = unpaidHours == null ? 0 : unpaidHours;
+        double modelAmountOwed = amountOwed == null ? 0.0 : amountOwed;
+        return new BillablePerson(modelName, modelPhone, modelEmail, modelAddress,
+                modelDate, modelSlot, modelTags, modelContacts, modelRemark,
+                modelUnpaidHours, modelAmountOwed);
     }
 
 }

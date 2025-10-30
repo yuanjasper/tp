@@ -4,6 +4,7 @@ title: User Guide
 ---
 
 TuitionSync is a **desktop app for private tutors managing tutees' contacts and tuition/personal scheduling, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TuitionSync can get your contact management tasks done faster than traditional GUI apps.
+Note that all contacts added to TuitionSync will automatically be taken as a tutee, regardless of whether it is tagged as tutee.
 
 * Table of Contents
 {:toc}
@@ -26,13 +27,13 @@ TuitionSync is a **desktop app for private tutors managing tutees' contacts and 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `list` : Lists all tutees.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01, d/wednesday s/16:00-18:00` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01, d/wednesday s/16:00-18:00` : Adds a tutee named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+   * `clear` : Deletes all tutees.
 
    * `exit` : Exits the app.
 
@@ -78,15 +79,16 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [b/BILLING_CONTACT] [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`
 
+* Phone number and billing contact must be exactly 8 digits long, with only numerical values.
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/wednesday s/16:00-18:00 t/tutee b/98226544`
-* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/12345678 d/monday s/16:00-18:00 t/tutee t/cousin`
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/12345678 d/monday s/16:00-18:00 t/tutee t/cousin r/Exams soon`
 
 ### Listing all persons : `list`
 
@@ -98,11 +100,12 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SLOT] [b/BILLING_CONTACT] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SLOT] [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Phone number and billing contact must be exactly 8 digits long, with only numerical values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
@@ -139,8 +142,21 @@ Format: `getaddress  NAME`
 * If there is more than one person that matches the NAME specified, an error message "There are multiple entries for search requirements" will be shown.
 * Tip: Make the NAME as specific as possible to avoid multiple matches.
 
-Examples: 
+Examples:
 * `getaddress John Doe` returns `John street, block 123, #01-01`
+
+### Getting amount owed : `getamountowed`
+
+Gets the amount owed of the specified person.
+
+Format: `getamountowed  NAME`
+
+* The name specified is case-insensitive. e.g `hans` will match `Hans`
+* If there is more than one person that matches the NAME specified, an error message "There are multiple entries for search requirements" will be shown.
+* Tip: Make the NAME as specific as possible to avoid multiple matches.
+
+Examples:
+* `getamountowed John Doe` returns `$0.00`
 
 ### Getting billing contact : `getbillingcontact`
 
@@ -188,7 +204,31 @@ Returns a list of tutees sorted by tuition date first, then time slot of tuition
 
 Format: `sortbydate`
 
-### Listing all persons : `schedule`
+### Editing a person unpaid hours : `edithours`
+
+Edits the unpaid hour of an existing tutee in the address book.
+
+Format: `edithours INDEX h/HOURS`
+
+* Edits the unpaid hour of the tutee at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* HOURS must be provided, cannot be negative and cannot be the same number as the hours currently reflected.
+* Existing values will be updated to the input values.
+* Note: This command does not add on hours to current values, rather it changes the unpaid hours to the input value.
+
+Examples:
+*  `edit 1 h/5` Edits the unpaid hours of the 1st person to be `5`.
+
+### Paid in full : `paidfull`
+
+Changes the unpaid hours and amount owed of the specified person to 0 and $0.00 respectively.
+
+Format: `paidfull INDEX`
+
+* Indicates the person at the specified `INDEX` has no unpaid hours or amount owed.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+### Listing schedule : `schedule`
 
 Shows a list of your current schedule
 
@@ -205,7 +245,7 @@ Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 Examples:
 * `addactivity i/lesson d/friday s/09:00-10:00`
 
-### Add activity : `deleteactivity`
+### Delete activity : `deleteactivity`
 
 Deletes an activity from your schedule.
 
@@ -244,6 +284,10 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 _Details coming soon ..._
 
+### Paid partially `[coming in v2.0]`
+
+_Details coming soon ..._
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -261,20 +305,25 @@ _Details coming soon ..._
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
+### In alphabetical order
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/tuesday /s 10:00-12:00 t/friend t/tutee`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/tuesday /s 10:00-12:00 t/friend t/tutee`
 **Add activity** | `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT` <br> e.g., `addactivity i/lesson d/friday s/09:00-10:00`
-**Delete activity** | `deleteactivity d/DAY s/TIMESLOT` <br> e.g., `deleteactivity d/friday s/09:00-10:00`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete activity** | `deleteactivity d/DAY s/TIMESLOT` <br> e.g., `deleteactivity d/friday s/09:00-10:00`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SLOT] [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit hours** | `edithours INDEX h/HOURS` <br> e.g. `edithours 3 h/10`
+**Exit** | `exit`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Get Address** | `getaddress NAME` <br> e.g., `getaddress John Doe`
+**Get amount owed** | `getamountowed NAME` <br> e.g., `getamountowed John Doe`
 **Get Billing Contact** | `getbillingcontact NAME` <br> e.g., `getbillingcontact John Doe`
 **Get Email** | `getemail NAME` <br> e.g., `getemail John Doe`
-**List** | `list`
-**Schedule** | `schedule`
 **Help** | `help`
+**List** | `list`
+**Paid in full** | `paidfull INDEX` <br> e.g. `paidfull 4`
+**Schedule** | `schedule`
 **Sort by date** | `sortbydate`

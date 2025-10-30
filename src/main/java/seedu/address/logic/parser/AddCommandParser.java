@@ -64,11 +64,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Remark remark = new Remark(remarkValue.orElse("NIL"));
 
         Person person;
-        if (tagList.contains(new Tag("tutee"))) {
-            person = new BillablePerson(name, phone, email, address, date, slot, tagList, contactList, remark, 0, 0.0);
-        } else {
-            person = new Person(name, phone, email, address, date, slot, tagList, contactList, remark);
-        }
+        person = new BillablePerson(name, phone, email, address, date, slot, tagList, contactList, remark, 0, 0.0);
 
         return new AddCommand(person);
     }

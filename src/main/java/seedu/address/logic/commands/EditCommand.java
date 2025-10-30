@@ -141,20 +141,14 @@ public class EditCommand extends Command {
         Set<BillingContact> updatedContacts = editPersonDescriptor.getContacts().orElse(personToEdit.getContacts());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
 
-        // Check if this person is a tutee
-        boolean isTutee = updatedTags.stream()
-                .anyMatch(tag -> tag.tagName.equalsIgnoreCase("tutee"));
 
-        // Preserve billing data if this was already a BillablePerson
-        if (isTutee) {
-            int unpaidHour = 0;
-            double amountOwed = 0.0;
+        int unpaidHour;
+        double amountOwed;
 
-            if (personToEdit instanceof BillablePerson) {
-                BillablePerson billable = (BillablePerson) personToEdit;
-                unpaidHour = billable.getUnpaidHours();
-                amountOwed = billable.getAmountOwed();
-            }
+        if (personToEdit instanceof BillablePerson) {
+            BillablePerson billable = (BillablePerson) personToEdit;
+            unpaidHour = billable.getUnpaidHours();
+            amountOwed = billable.getAmountOwed();
 
             return new BillablePerson(updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedDate, updatedSlot, updatedTags, updatedContacts, updatedRemark, unpaidHour, amountOwed);
