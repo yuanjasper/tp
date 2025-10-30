@@ -30,7 +30,7 @@ deactivate AddressBookParser
 LogicManager -> SortCommand : execute()
 activate SortCommand
 
-SortCommand -> Model : updateFilteredPersonList(IS_TUTEE)
+SortCommand -> Model : updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)
 SortCommand -> Model : getFilteredPersonList()
 Model --> SortCommand : filtered list
 
