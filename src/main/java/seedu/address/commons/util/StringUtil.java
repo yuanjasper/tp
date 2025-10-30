@@ -49,6 +49,7 @@ public class StringUtil {
         requireNonNull(word);
 
         String preppedWord = word.trim();
+        preppedWord = preppedWord.toLowerCase();
         String preppedSentence = sentence.toLowerCase();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         return preppedSentence.contains(preppedWord);
