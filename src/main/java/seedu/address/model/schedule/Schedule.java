@@ -43,6 +43,7 @@ public class Schedule implements ReadOnlySchedule {
      */
     public void setActivities(List<Activity> activities) {
         requireAllNonNull(activities);
+        this.activities.clear();
         for (Activity activity : activities) {
             add(activity);
         }

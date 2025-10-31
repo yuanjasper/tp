@@ -33,7 +33,7 @@ Note that all contacts added to TuitionSync will automatically be taken as a tut
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all tutees.
+   * `clear` : Deletes all tutees and activities.
 
    * `exit` : Exits the app.
 
@@ -256,7 +256,7 @@ Examples:
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the list of tutee of the address book.
+Clears all entries from the list of tutees of the address book, as well as all activities in schedule.
 
 Format: `clear`
 
