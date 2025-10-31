@@ -44,7 +44,7 @@ public class AddCommand extends Command {
             + PREFIX_DATE + "wednesday "
             + PREFIX_SLOT + "16:00-18:00 "
             + PREFIX_TAG + "tutee "
-            + PREFIX_CONTACT + "83451235"
+            + PREFIX_CONTACT + "83451235 "
             + PREFIX_REMARK + "Exams coming soon.";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
