@@ -453,12 +453,10 @@ testers are expected to do more *exploratory* testing.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+   1. Resize the window to an optimum size. Move the window to a different location. Close the window using the command `exit`
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
 
 ### Deleting a person
 
@@ -519,4 +517,19 @@ testers are expected to do more *exploratory* testing.
 1. Sorting tutees based on their tuition date first then slot timing.
    1. Test case: `sortbydate` <br> Expected: All tutees will be sorted and shown. Success message shown in status message.
    2. Test case: `sortbydate hh` <br> Nothing done. Error details shown in the status message.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+Team size: 3
+
+1. **Restricting persons and schedule commands to only execute when the user can see their data** Currently, the user is able to edit people from the addressbook
+   despite being on the schedule page. Additionally, users can add activities despite being on the list of people's page. This can cause accidental deletions or unintended edits
+   as users are not able to see what exactly they are editing. A future enhancement is for commands to check if the user is on the right page before execution.
+
+
+2. **Checking for close / similar contacts to prevent duplicate entries** Currently, the Address Book checks for duplicate by finding exact matches to a contact's `name`, `phone`, `email` and `address`.
+This means that if the user inputs anything that is slightly off it will result in another entry. However, this system may be too strict for users and can cause alot of duplicate entries. To combat this, 
+future versions can check for similar looking persons in the address book and prompt the user about these entries before adding or cancelling the entry.
 
