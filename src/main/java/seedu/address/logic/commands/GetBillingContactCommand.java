@@ -34,6 +34,11 @@ public class GetBillingContactCommand extends Command {
         if (model.getFilteredPersonList().size() == 0) {
             return new CommandResult(Messages.MESSAGE_NO_USER);
         } else if (model.getFilteredPersonList().size() == 1) {
+            if (model.getFilteredPersonList().get(0).getContacts().size() == 0) {
+                return new CommandResult("Here is the billing contact of "
+                        + model.getFilteredPersonList().get(0).getName().toString() + ": "
+                        + model.getFilteredPersonList().get(0).getPhone().toString());
+            }
             return new CommandResult(
                     String.format("Here is the billing contact of %s: %s",
                             model.getFilteredPersonList().get(0).getName(),

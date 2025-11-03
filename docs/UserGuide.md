@@ -29,7 +29,7 @@ Note that all contacts added to TuitionSync will automatically be taken as a tut
 
    * `list` : Lists all tutees.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01, d/wednesday s/16:00-18:00` : Adds a tutee named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/sunday s/16:00-18:00 b/98226544` : Adds a tutee named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -66,6 +66,8 @@ Note that all contacts added to TuitionSync will automatically be taken as a tut
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+## General Commands
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -74,6 +76,25 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+### Clearing all entries : `clear`
+
+Clears all entries from the list of tutees of the address book, as well as all activities in schedule.
+
+Format: `clear`
+
+### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
+
+## Persons-specific commands
+
+### Listing all persons : `list`
+
+Shows a list of all persons in the address book.
+
+Format: `list`
 
 ### Adding a person: `add`
 
@@ -82,19 +103,31 @@ Adds a person to the address book.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`
 
 * Phone number and billing contact must be exactly 8 digits long, with only numerical values.
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+* Tags can only be one word, alphanumeric.
+* When successfully added, the tuition date and timeslot will be added to schedule.
+<div markdown="span" class="alert alert-primary">
+:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/wednesday s/16:00-18:00 t/tutee b/98226544`
-* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/12345678 d/monday s/16:00-18:00 t/tutee t/cousin r/Exams soon`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/sunday s/16:00-18:00 b/98226544`
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/12345678 d/saturday s/16:00-18:00 t/cousin r/Exams soon`
 
-### Listing all persons : `list`
+### Deleting a person : `delete`
 
-Shows a list of all persons in the address book.
+Deletes the specified person from the address book.
 
-Format: `list`
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
 
 ### Editing a person : `edit`
 
@@ -109,6 +142,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SL
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
+* This edit command is seperate from another edit commands which enables editing of unpaid hours (see below)
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -131,6 +165,36 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Sorting tutees by tuition date : `sortbydate`
+
+Returns a list of tutees sorted by tuition date first, then time slot of tuition.
+
+Format: `sortbydate`
+
+### Editing a person unpaid hours : `edithours`
+
+Edits the unpaid hour of an existing tutee in the address book.
+
+Format: `edithours INDEX h/HOURS`
+
+* Edits the unpaid hour of the tutee at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* HOURS must be provided, cannot be negative, cannot be the same number as the hours currently reflected and cannot be greater than 1000
+* Existing values will be updated to the input values.
+* Note: This command does not add on hours to current values, rather it changes the unpaid hours to the input value.
+
+Examples:
+*  `edithours 1 h/5` Edits the unpaid hours of the 1st person to be `5`.
+
+### Paid in full : `paidfull`
+
+Changes the unpaid hours and amount owed of the specified person to 0 and $0.00 respectively.
+
+Format: `paidfull INDEX`
+
+* Indicates the person at the specified `INDEX` has no unpaid hours or amount owed.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
 
 ### Getting address : `getaddress`
 
@@ -184,49 +248,27 @@ Format: `getemail NAME`
 Examples:
 * `getemail John Doe` returns `johndoe@example.com`
 
-### Deleting a person : `delete`
+### More on Get Commands
+This section describes in more detail the expected behaviour of the `get` commands.
 
-Deletes the specified person from the address book.
+When using these commands, the `NAME` parameters acts as partial matches for full names.
+We illustrate using `getaddress` as an example:
 
-Format: `delete INDEX`
+When the AB3 has only one user called `John Doe`, applying `getaddress John Doe` will return John's email.
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+![result for 'getaddress John Doe'](images/getAddressJohnDoeResult.png)
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+When the AB3 has two users, one called `John` and one called `John Doe`, applying `getaddress John` will return
+both `John` and `John Doe` person card and return the multiple entries error.
 
-### Sorting tutees by tuition date : `sortbydate`
+![result for 'getaddress John'](images/getAddressMultipleJohnResult.png)
 
-Returns a list of tutees sorted by tuition date first, then time slot of tuition.
+When the AB3 has two users, one called `John` and one called `John Doe`, applying `getaddress John D` will return
+`John Doe`'s email.
 
-Format: `sortbydate`
+![result for 'getaddress John D'](images/getAddressJohnDResult.png)
 
-### Editing a person unpaid hours : `edithours`
-
-Edits the unpaid hour of an existing tutee in the address book.
-
-Format: `edithours INDEX h/HOURS`
-
-* Edits the unpaid hour of the tutee at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* HOURS must be provided, cannot be negative and cannot be the same number as the hours currently reflected.
-* Existing values will be updated to the input values.
-* Note: This command does not add on hours to current values, rather it changes the unpaid hours to the input value.
-
-Examples:
-*  `edit 1 h/5` Edits the unpaid hours of the 1st person to be `5`.
-
-### Paid in full : `paidfull`
-
-Changes the unpaid hours and amount owed of the specified person to 0 and $0.00 respectively.
-
-Format: `paidfull INDEX`
-
-* Indicates the person at the specified `INDEX` has no unpaid hours or amount owed.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+## Schedule-specific commands 
 
 ### Listing schedule : `schedule`
 
@@ -242,6 +284,12 @@ Adds an activity to your schedule.
 
 Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 
+* Activity info can be no longer than 100 characters.
+* The format for the timeslot strictly follow `HH:MM-HH:MM`, it cannot extend past midnight and `00:00` is taken to be midnight of the day stated.
+* Timeslot cannot have the starting time be earlier or the same as the end time.
+* Acitivty to be added cannot clash with existing activites.
+* Day input must be the full name of the day, case-insensitive.
+
 Examples:
 * `addactivity i/lesson d/friday s/09:00-10:00`
 
@@ -253,18 +301,6 @@ Format: `deleteactivity d/DAY s/TIMESLOT`
 
 Examples:
 * `deleteactivity d/friday s/09:00-10:00`
-
-### Clearing all entries : `clear`
-
-Clears all entries from the list of tutees of the address book, as well as all activities in schedule.
-
-Format: `clear`
-
-### Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
 
 ### Saving the data
 
@@ -309,7 +345,7 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/tuesday /s 10:00-12:00 t/friend t/tutee`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/sunday s/16:00-18:00 b/98226544`
 **Add activity** | `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT` <br> e.g., `addactivity i/lesson d/friday s/09:00-10:00`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
