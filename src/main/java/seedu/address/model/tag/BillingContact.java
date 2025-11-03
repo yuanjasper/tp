@@ -9,7 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class BillingContact {
 
-    public static final String MESSAGE_CONSTRAINTS = "Billing Contacts are phone numbers, should be 8 digits long";
+    public static final String MESSAGE_CONSTRAINTS = "Billing Contacts are phone numbers, it should only contain "
+            + "numbers, and must be exactly 8 digits long." + " It should also start with either 6, 8 or 9.";
     public static final String VALIDATION_REGEX = "^\\d{8}$";
 
     public final String contact;
@@ -29,7 +30,10 @@ public class BillingContact {
      * Returns true if a given string is a valid contact number.
      */
     public static boolean isValidContact(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (test.matches(VALIDATION_REGEX)) {
+            return (test.startsWith("6") || test.startsWith("8") || test.startsWith("9"));
+        }
+        return false;
     }
 
     @Override
