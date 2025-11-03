@@ -102,7 +102,14 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`
 
-* Phone number and billing contact must be exactly 8 digits long, with only numerical values.
+* A person's name should not be more than 50 characters long and only contain alphabetical characters and spaces.
+* Phone number and billing contact must be exactly 8 digits long, with only numerical values. It should also start with
+either 6, 8, or 9 as per Singapore contact numbers.
+* A person's email must not be more than 100 characters long and should be of the format local-part@domain
+  * Domain part must contain at least one dot (.), and not end with a dot or contain consecutive dots. 
+It must also end with a domain label at least 2 characters long, start and end with alphanumeric characters.
+Lastly, each domain label consists of alphanumeric characters, separated only by hyphens, if any.
+* A person's address must not be more than 200 characters long.
 * Tags can only be one word, alphanumeric.
 * When successfully added, the tuition date and timeslot will be added to schedule.
 * If no billing contact is specified, the person's phone number will be used as the billing contact instead.
@@ -139,7 +146,14 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SL
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Phone number and billing contact must be exactly 8 digits long, with only numerical values.
+* A person's name should not be more than 50 characters long and only contain alphabetical characters and spaces.
+* Phone number and billing contact must be exactly 8 digits long, with only numerical values. It should also start with
+  either 6, 8, or 9 as per Singapore contact numbers.
+* A person's email must not be more than 100 characters long and should be of the format local-part@domain
+    * Domain part must contain at least one dot (.), and not end with a dot or contain consecutive dots.
+      It must also end with a domain label at least 2 characters long, start and end with alphanumeric characters.
+      Lastly, each domain label consists of alphanumeric characters, separated only by hyphens, if any.
+* A person's address must not be more than 200 characters long.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
@@ -165,7 +179,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
+* `find John` returns `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
@@ -298,7 +312,7 @@ Format: `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT`
 * Day input must be the full name of the day, case-insensitive.
 
 Examples:
-* `addactivity i/lesson d/friday s/09:00-10:00`
+* `addactivity i/lesson d/monday s/09:00-10:00`
 
 ### Delete activity : `deleteactivity`
 
@@ -355,14 +369,14 @@ _Details coming soon ..._
 Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE s/TIME_SLOT [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/sunday s/16:00-18:00 b/98226544`
-**Add activity** | `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT` <br> e.g., `addactivity i/lesson d/friday s/09:00-10:00`
+**Add activity** | `addactivity i/ACTIVITY_INFO d/DAY s/TIMESLOT` <br> e.g., `addactivity i/lesson d/monday s/09:00-10:00`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Delete activity** | `deleteactivity d/DAY s/TIMESLOT` <br> e.g., `deleteactivity d/friday s/09:00-10:00`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SLOT] [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Edit Hours** | `edithours INDEX h/HOURS` <br> e.g. `edithours 3 h/10`
 **Exit** | `exit`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find irfan`
 **Get Address** | `getaddress NAME` <br> e.g., `getaddress John Doe`
 **Get Amount Owed** | `getamountowed NAME` <br> e.g., `getamountowed John Doe`
 **Get Billing Contact** | `getbillingcontact NAME` <br> e.g., `getbillingcontact John Doe`
