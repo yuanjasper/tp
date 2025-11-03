@@ -32,6 +32,7 @@ public class AddActivityCommand extends Command {
     public static final String MESSAGE_DUPLICATE_ACTIVITY = "Activity already exists in the schedule";
     public static final String MESSAGE_MISMATCHED_TIMING = "Start time of activity is equal to or after end time";
     public static final String MESSAGE_OVERLAP_TIMING = "There is already something scheduled during this timeslot";
+    public static final String MESSAGE_TOO_LONG = "The activity info cannot exceed 100 characters";
 
     private final Activity activity;
 
@@ -55,6 +56,9 @@ public class AddActivityCommand extends Command {
         }
         if (model.hasOverlap(activity)) {
             throw new CommandException(MESSAGE_OVERLAP_TIMING);
+        }
+        if (activity.getInfo().toString().length() > 100) {
+            throw new CommandException(MESSAGE_TOO_LONG);
         }
         model.addActivity(activity);
         return new CommandResult(String.format(MESSAGE_ADD_ACTIVITY_SUCCESS, Messages.format(activity)));
