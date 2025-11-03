@@ -83,6 +83,9 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The dotted arrow leading to Ui interface comes from the hidden user and does not extend out from the arrow pointing from UiManager to Logic. This confusion is due to a limitation of PlantUML.
+</div>
+
 ### Logic component
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
@@ -117,7 +120,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="600" height="744"/>
 
 
 The `Model` component,
@@ -161,73 +164,6 @@ Given below shows the sequence diagram of how the sortbydate command goes throug
 The calls to Model class shown above are shown in detail in the sequence diagram below.
 
 ![SortSequenceDiagram](images/SortByDateSequenceDiagram-Model.png)
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
 
 #### Design considerations:
 
@@ -280,22 +216,22 @@ _{more aspects and alternatives to be added}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                               | I want to …​                                                                    | So that I can…​                                             |
-|-----|---------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------|
-| `* * *` | new user                              | see information page                                                            | refer to instructions when I forget how to use the App      |
-| `* * *` | student                               | add my own schedule                                                             | I can account for potential timetable conflicts with my own schedule|
-| `* * *` | student                               | delete my schedule                                                              | I can free up the timeslot                          |
-| `* * *` | tuition teacher                       | add a tutee’s data                                                              |  |
-| `* * *` | tuition teacher                       | delete a tutee's data                                                           |             |
-| `* * *` | tuition teacher                       | get the emails of all my current tutees                                         | I can email them their homework for the week       |
-| `* * *` | tuition teacher                       | get the billing contact of all my current tutees                                | I can contact them about payment       |
-| `* * *` | tuition teacher                       | get the address of my tutee                                                     | I can proceed to the location for the lesson       |
-| `* * *` | tuition teacher                       | sort the list of tutees according to date of lesson                             | I can see more easily who I am teaching next       |
-| `* *` | tuition teacher                       | get the amount each tutee owes                                                  | I know how much I should be getting |
-| `* *` | tuition teacher                       | leave notes on what my tutee is weak in                                         | I know how to help them more        |
-| `* *` | tuition teacher and part-time student | have a daily overview of my activities for the day                              | I know and can prepare for my day efficiently       |
-| `*` | tuition teacher | I can get suggested time slots for new tutees based on lesson date and duration | I can slot in new tutees more easily       |
-| `*` | expert user                           | I can create shortcuts for tasks                                                | I can save time on frequently performed tasks       |
+| Priority | As a …​                               | I want to …​                                                        | So that…​                                                            |
+|-----|---------------------------------------|---------------------------------------------------------------------|----------------------------------------------------------------------|
+| `* * *` | new user                              | see information page                                                | I can refer to instructions when I forget how to use the App         |
+| `* * *` | student                               | add my own schedule                                                 | I can account for potential timetable conflicts with my own schedule |
+| `* * *` | student                               | delete my schedule                                                  | I can free up the timeslot                                           |
+| `* * *` | tuition teacher                       | add a tutee’s data                                                  |                                                                      |
+| `* * *` | tuition teacher                       | delete a tutee's data                                               |                                                                      |
+| `* * *` | tuition teacher                       | get the emails of all my current tutees                             | I can email them their homework for the week                         |
+| `* * *` | tuition teacher                       | get the billing contact of all my current tutees                    | I can contact them about payment                                     |
+| `* * *` | tuition teacher                       | get the address of my tutee                                         | I can proceed to the location for the lesson                         |
+| `* * *` | tuition teacher                       | sort the list of tutees according to date of lesson                 | I can see more easily who I am teaching next                         |
+| `* *` | tuition teacher                       | get the amount each tutee owes                                      | I know how much I should be getting                                  |
+| `* *` | tuition teacher                       | leave notes on what my tutee is weak in                             | I know how to help them more                                         |
+| `* *` | tuition teacher and part-time student | have a daily overview of my activities for the day                  | I know and can prepare for my day efficiently                        |
+| `*` | tuition teacher | get suggested time slots for new tutees based on lesson date and duration | I can slot in new tutees more easily                                 |
+| `*` | expert user                           | create shortcuts for tasks                                          | I can save time on frequently performed tasks                        |
 
 
 ### Use cases
@@ -440,7 +376,6 @@ Given below are instructions to test the app manually.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
-
 </div>
 
 ### Launch and shutdown
@@ -457,8 +392,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
 
 ### Deleting a person
 
@@ -487,7 +420,7 @@ testers are expected to do more *exploratory* testing.
    3. Other incorrect test cases: `addactivity i/CCA s/12:00-13:00`, `addactivity i/ Class d/tuesday s/9:00-13:00` <br> Expected: Similar to previous.
 
 ### Deleting an Activity
-1. Deletes an activity specified by the time and time of the activity.
+1. Deletes an activity specified by the day and slot of the activity.
    1. Prerequisites: Activity slot needs to be exact and reflect an activity slot in the current schedule.
    2. Prerequisites: Activity deleted cannot be a tuition slot, that was added via `add command` in address book.
    2. Test case: `deleteactivity d/thursday s/18:00-20:00` <br> Expected: Deletes an activity. Deleted activity details will be shown on status message.
