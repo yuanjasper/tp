@@ -9,8 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class BillingContact {
 
-    public static final String MESSAGE_CONSTRAINTS = "Billing Contacts are phone numbers, it should only contain " +
-            "numbers, and must be exactly 8 digits long." + " It should also start with either 6, 8 or 9.";
+    public static final String MESSAGE_CONSTRAINTS = "Billing Contacts are phone numbers, it should only contain "
+            + "numbers, and must be exactly 8 digits long." + " It should also start with either 6, 8 or 9.";
     public static final String VALIDATION_REGEX = "^\\d{8}$";
 
     public final String contact;
