@@ -45,7 +45,7 @@ Note that all contacts added to TuitionSync will automatically be taken as a tut
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about the command format:**<br>
+:information_source: Notes about the command format:<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
@@ -112,6 +112,7 @@ Lastly, each domain label consists of alphanumeric characters, separated only by
 * A person's address must not be more than 200 characters long.
 * Tags can only be one word, alphanumeric.
 * When successfully added, the tuition date and timeslot will be added to schedule.
+* If no billing contact is specified, the person's phone number will be used as the billing contact instead.
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**
 A person can have any number of tags (including 0)
@@ -119,7 +120,7 @@ A person can have any number of tags (including 0)
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/sunday s/16:00-18:00 b/98226544`
-* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/12345678 d/saturday s/16:00-18:00 t/cousin r/Exams soon`
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Street p/82826455 d/saturday s/16:00-18:00 t/cousin r/Exams soon`
 
 ### Deleting a person : `delete`
 
@@ -156,7 +157,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SL
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
-* This edit command is seperate from another edit command which enables editing of unpaid hours (see below)
+* This edit command is seperate from another edit commands which enables editing of unpaid hours (see below)
+* You can remove the billing contact by typing `b/` without specifying any number after it
+* If no billing contact is specified, the person's phone number will be used as the billing contact instead.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -221,7 +224,7 @@ Format: `getaddress  NAME`
 * Tip: Make the NAME as specific as possible to avoid multiple matches.
 
 Examples:
-* `getaddress John Doe` returns `John street, block 123, #01-01`
+* `getaddress John Doe` returns `Here is the address of John Doe: 311, Clementi Ave 2, #02-25`
 
 ### Getting amount owed : `getamountowed`
 
@@ -234,7 +237,7 @@ Format: `getamountowed  NAME`
 * Tip: Make the NAME as specific as possible to avoid multiple matches.
 
 Examples:
-* `getamountowed John Doe` returns `$0.00`
+* `getamountowed John Doe` returns `Here is the amount owed by John Doe: $0.00`
 
 ### Getting billing contact : `getbillingcontact`
 
@@ -247,7 +250,7 @@ Format: `getbillingcontact NAME`
 * Tip: Make the NAME as specific as possible to avoid multiple matches.
 
 Examples:
-* `getbillingcontact John Doe` returns `98226544`
+* `getbillingcontact John Doe` returns `Here is the billing contact of John Doe:  83451235`
 
 ### Getting email : `getemail`
 
@@ -260,7 +263,7 @@ Format: `getemail NAME`
 * Tip: Make the NAME as specific as possible to avoid multiple matches.
 
 Examples:
-* `getemail John Doe` returns `johndoe@example.com`
+* `getemail John Doe` returns `Here is the email of John Doe: johnd@example.com`
 
 ### More on Get Commands
 This section describes in more detail the expected behaviour of the `get` commands.
@@ -269,6 +272,7 @@ When using these commands, the `NAME` parameters acts as partial matches for ful
 We illustrate using `getaddress` as an example:
 
 When the AB3 has only one user called `John Doe`, applying `getaddress John Doe` will return John's email.
+When the AB3 has only one user called `John Doe`, applying `getaddress hn D` will return John's email.
 
 ![result for 'getaddress John Doe'](images/getAddressJohnDoeResult.png)
 
@@ -281,6 +285,9 @@ When the AB3 has two users, one called `John` and one called `John Doe`, applyin
 `John Doe`'s email.
 
 ![result for 'getaddress John D'](images/getAddressJohnDResult.png)
+
+Because of the way these `get` functions work, it is highly recommended to spell their full names if you can remember them. Alternatively, this also allows users to find what they 
+need by partial matching persons' names to what the user can remember.
 
 ## Schedule-specific commands 
 
@@ -312,6 +319,8 @@ Examples:
 Deletes an activity from your schedule.
 
 Format: `deleteactivity d/DAY s/TIMESLOT`
+
+* Delete activity only allows activites that were not added via adding a tutee. 
 
 Examples:
 * `deleteactivity d/friday s/09:00-10:00`
@@ -365,15 +374,15 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Delete activity** | `deleteactivity d/DAY s/TIMESLOT` <br> e.g., `deleteactivity d/friday s/09:00-10:00`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [s/TIME_SLOT] [r/REMARK] [b/BILLING_CONTACT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Edit hours** | `edithours INDEX h/HOURS` <br> e.g. `edithours 3 h/10`
+**Edit Hours** | `edithours INDEX h/HOURS` <br> e.g. `edithours 3 h/10`
 **Exit** | `exit`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find irfan`
 **Get Address** | `getaddress NAME` <br> e.g., `getaddress John Doe`
-**Get amount owed** | `getamountowed NAME` <br> e.g., `getamountowed John Doe`
+**Get Amount Owed** | `getamountowed NAME` <br> e.g., `getamountowed John Doe`
 **Get Billing Contact** | `getbillingcontact NAME` <br> e.g., `getbillingcontact John Doe`
 **Get Email** | `getemail NAME` <br> e.g., `getemail John Doe`
 **Help** | `help`
 **List** | `list`
-**Paid in full** | `paidfull INDEX` <br> e.g. `paidfull 4`
+**Paid In Full** | `paidfull INDEX` <br> e.g. `paidfull 4`
 **Schedule** | `schedule`
-**Sort by date** | `sortbydate`
+**Sort By Date** | `sortbydate`
