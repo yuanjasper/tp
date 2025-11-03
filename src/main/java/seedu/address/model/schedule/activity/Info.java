@@ -9,7 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Info {
 
-    public static final String MESSAGE_CONSTRAINTS = "Info can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Info should not be more than 100 characters long, "
+            + "can take any values, and it should not be blank";
 
     /**
      * The first character of the address must not be a whitespace,
@@ -34,7 +35,10 @@ public class Info {
      * Returns true if a given string is a valid info.
      */
     public static boolean isValidInfo(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (test.length() <= 100) {
+            return test.matches(VALIDATION_REGEX);
+        }
+        return false;
     }
 
     @Override
