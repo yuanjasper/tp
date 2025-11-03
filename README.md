@@ -1,4 +1,5 @@
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103-F09-2/tp/actions)
+[![CI Status](https://github.com/AY2526S1-CS2103-F09-2/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103-F09-2/tp/actions)
+[![codecov](https://codecov.io/gh/AY2526S1-CS2103-F09-2/tP/graph/badge.svg?token=O9GH5MCB7P)](https://codecov.io/gh/AY2526S1-CS2103-F09-2/tP)
 
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 

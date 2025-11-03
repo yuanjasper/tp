@@ -31,11 +31,13 @@ public class NameTest {
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
         assertFalse(Name.isValidName("12345")); // numbers only
         assertFalse(Name.isValidName("peter the 2nd")); // alphanumeric characters
-        assertFalse(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertFalse(Name.isValidName("David Roger Sam Thomas Luke "
+                + "Jackson Ray Junior second")); // long names > 50 characters
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
+        assertTrue(Name.isValidName("David Roger Jackson Ray Jr second")); // long names < 50 characters
     }
 
     @Test
@@ -47,6 +49,18 @@ public class NameTest {
 
         // same object -> returns true
         assertTrue(name.equals(name));
+
+        // uncapitalized name -> returns true
+        assertTrue(name.equals(new Name("valid name")));
+
+        // fully capitalised name -> returns true
+        assertTrue(name.equals(new Name("VALID NAME")));
+
+        // randomly capitalised name -> returns true
+        assertTrue(name.equals(new Name("vALid NamE")));
+
+        // name with additional whitespace in between -> returns true
+        assertTrue(name.equals(new Name("Valid        Name")));
 
         // null -> returns false
         assertFalse(name.equals(null));

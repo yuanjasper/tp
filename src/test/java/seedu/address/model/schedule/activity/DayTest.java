@@ -33,6 +33,8 @@ public class DayTest {
         // valid days
         assertTrue(Day.isValidDay("monday"));
         assertTrue(Day.isValidDay("Monday")); // capitalised day
+        assertTrue(Day.isValidDay("MONDAY")); // fully capitalised string
+        assertTrue(Day.isValidDay("mONdaY")); // randomly capitalised string
     }
 
     @Test
@@ -44,6 +46,12 @@ public class DayTest {
 
         // same object -> returns true
         assertTrue(day.equals(day));
+
+        // fully capitalised day -> returns true
+        assertTrue(day.equals(new Day("MONDAY")));
+
+        // randomly capitalised day -> returns true
+        assertTrue(day.equals(new Day("mOnDAy")));
 
         // null -> returns false
         assertFalse(day.equals(null));

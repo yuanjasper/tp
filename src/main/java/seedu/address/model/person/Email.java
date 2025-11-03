@@ -31,7 +31,7 @@ public class Email {
     private static final String DOMAIN_PART_REGEX = ALPHANUMERIC_NO_UNDERSCORE
             + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
-    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
+    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)+" + DOMAIN_LAST_PART_REGEX;
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
 
     public final String value;
@@ -51,28 +51,10 @@ public class Email {
      * Returns if a given string is a valid email.
      */
     public static boolean isValidEmail(String test) {
-        if (test == null || !test.matches(VALIDATION_REGEX) || test.length() > 100) {
-            return false;
+        if (test.length() <= 100) {
+            return test.matches(VALIDATION_REGEX);
         }
-        String[] parts = test.split("@");
-        if (parts.length != 2) {
-            return false;
-        }
-        String domain = parts[1];
-        // --- Domain-level checks ---
-        if (!domain.contains(".")) {
-            return false;
-        }
-        if (domain.endsWith(".")) {
-            return false;
-        }
-        if (domain.contains("..")) {
-            return false;
-        }
-        if (!domain.matches("[A-Za-z0-9.-]+")) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     @Override

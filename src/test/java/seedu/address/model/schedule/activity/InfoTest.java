@@ -27,11 +27,14 @@ public class InfoTest {
         // invalid infos
         assertFalse(Info.isValidInfo("")); // empty string
         assertFalse(Info.isValidInfo(" ")); // spaces only
+        assertFalse(Info.isValidInfo("A very very very very very very long activity description "
+                + "for a very very very very very very long activity")); // very long info >100 characters
 
         // valid infos
         assertTrue(Info.isValidInfo("CS2103 Lecture"));
         assertTrue(Info.isValidInfo("a")); // one character
-        assertTrue(Info.isValidInfo("A very long activity description for a very long activity")); // long info
+        assertTrue(Info.isValidInfo("A very long activity description "
+                + "for a very long activity")); // long info <100 characters
     }
 
     @Test
