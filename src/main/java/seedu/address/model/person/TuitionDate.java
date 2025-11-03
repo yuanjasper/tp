@@ -24,9 +24,7 @@ public class TuitionDate {
     public TuitionDate(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS);
-        String capital = date.substring(0, 1).toUpperCase();
-        String capitalisedDate = capital + date.substring(1);
-        this.date = capitalisedDate;
+        this.date = date.substring(0, 1).toUpperCase() + date.substring(1).toLowerCase();
     }
 
     /**

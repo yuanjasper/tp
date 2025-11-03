@@ -77,7 +77,7 @@ public class Messages {
     public static String format(Activity activity) {
         final StringBuilder builder = new StringBuilder();
         builder.append(activity.getInfo())
-                .append("; Day:  ")
+                .append("; Day: ")
                 .append(activity.getDay())
                 .append("; Timeslot: ")
                 .append(activity.getTimeslot());

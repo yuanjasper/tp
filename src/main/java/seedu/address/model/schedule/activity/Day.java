@@ -27,8 +27,7 @@ public class Day {
     public Day(String day) {
         requireNonNull(day);
         checkArgument(isValidDay(day), MESSAGE_CONSTRAINTS);
-        String capital = day.substring(0, 1).toUpperCase();
-        value = capital + day.substring(1);
+        value = day.substring(0, 1).toUpperCase() + day.substring(1).toLowerCase();
     }
 
     /**
