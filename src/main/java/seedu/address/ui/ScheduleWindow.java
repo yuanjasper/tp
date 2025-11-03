@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -90,8 +91,28 @@ public class ScheduleWindow extends UiPart<Region> {
 
         dayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         timeslotColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        infoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        infoColumn.setCellFactory(tc -> {
+            TableCell<Activity, String> cell = new TableCell<>() {
+                private final javafx.scene.text.Text text = new javafx.scene.text.Text();
 
+                {
+                    text.wrappingWidthProperty().bind(infoColumn.widthProperty().subtract(10));
+                    text.fillProperty().bind(textFillProperty());
+                    setGraphic(text);
+                }
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        text.setText(null);
+                    } else {
+                        text.setText(item);
+                    }
+                }
+            };
+            return cell;
+        });
+        scheduleTable.setFixedCellSize(-1);
         scheduleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 

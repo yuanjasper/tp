@@ -29,7 +29,8 @@ public class EditHoursCommand extends Command {
 
     public static final String MESSAGE_EDIT_HOURS_SUCCESS = "Edited tutee unpaid hours: %1$s";
     public static final String MESSAGE_SAME_HOURS = "Hours are the same, no edits to be made.";
-    public static final String MESSAGE_NEGATIVE_HOURS = "Unpaid hours cannot be negative.";
+    public static final String MESSAGE_NEGATIVE_OR_ZERO_HOURS = "Unpaid hours cannot be zero or negative.";
+    public static final String MESSAGE_LARGE_HOURS = "Hours cannot be greater than 1000";
 
     private final Index index;
     private final int editedHours;
@@ -61,10 +62,12 @@ public class EditHoursCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_BILLABLE_PERSON);
         } else {
             BillablePerson billablePerson = (BillablePerson) personToEdit;
-            if (editedHours < 0) {
-                throw new CommandException(MESSAGE_NEGATIVE_HOURS);
+            if (editedHours <= 0) {
+                throw new CommandException(MESSAGE_NEGATIVE_OR_ZERO_HOURS);
             } else if (editedHours == billablePerson.getUnpaidHours()) {
                 throw new CommandException(MESSAGE_SAME_HOURS);
+            } else if (editedHours > 1000) {
+                throw new CommandException(MESSAGE_LARGE_HOURS);
             } else {
                 updatedPerson = new BillablePerson(personToEdit.getName(), personToEdit.getPhone(),
                         personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getDate(),
