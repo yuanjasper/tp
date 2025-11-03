@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HOURS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -71,7 +70,6 @@ public class EditHoursCommand extends Command {
                         personToEdit.getSlot(), personToEdit.getTags(), personToEdit.getContacts(),
                         personToEdit.getRemark(), editedHours, 0);
                 model.setPerson(personToEdit, updatedPerson);
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             }
             return new CommandResult(String.format(MESSAGE_EDIT_HOURS_SUCCESS, Messages.format(updatedPerson)));
         }

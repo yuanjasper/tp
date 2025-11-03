@@ -34,12 +34,15 @@ public class GetBillingContactCommand extends Command {
         if (model.getFilteredPersonList().size() == 0) {
             return new CommandResult(Messages.MESSAGE_NO_USER);
         } else if (model.getFilteredPersonList().size() == 1) {
-            return new CommandResult(
-                    String.format("Here is the billing contact of %s: %s",
-                            model.getFilteredPersonList().get(0).getName(),
-                            model.getFilteredPersonList().get(0).getContacts()
+            String billingContact = model.getFilteredPersonList().get(0).getContacts()
                                     .stream().map(BillingContact::toString)
-                                    .reduce("", (x, y) -> x + " " + y)));
+                                    .reduce("", (x, y) -> x + " " + y);
+            String message = billingContact.isBlank()
+                    ? String.format("No billing contact found for %s. Returning phone number instead: %s",
+                    model.getFilteredPersonList().get(0).getName(), model.getFilteredPersonList().get(0).getPhone())
+                    : String.format("Here is the billing contact of %s: %s",
+                    model.getFilteredPersonList().get(0).getName(), billingContact);
+            return new CommandResult(message);
         } else {
             return new CommandResult(Messages.MESSAGE_MULTIPLE_ENTRIES);
         }
